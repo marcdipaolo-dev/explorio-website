@@ -1430,14 +1430,9 @@
   }
 
   // Waitlist
-  function handleWaitlist() {
-    const input = document.getElementById('email-input');
-    if (!input.value || !input.value.includes('@')) {
-      input.focus();
-      input.style.borderColor = '#EF4444';
-      setTimeout(() => input.style.borderColor = '', 1200);
-      return;
-    }
+  const WAITLIST_URL = 'https://script.google.com/macros/s/AKfycbzvI5tahFghAKUCGuQGa8GMO636oUo3r9HK0Vv2dfTGBIc0F3_dzsJMZPtW00NdZE4Z/exec';
+
+  function showWaitlistSuccess(email) {
     document.getElementById('waitlist-form').style.display = 'none';
     document.querySelector('.waitlist-fine').style.display = 'none';
     const success = document.getElementById('waitlist-success');
@@ -1449,7 +1444,27 @@
       success.style.opacity = '1';
       success.style.transform = 'none';
     });
-    localStorage.setItem('explorio_waitlist', input.value);
+    localStorage.setItem('explorio_waitlist', email);
+  }
+
+  function handleWaitlist() {
+    const input = document.getElementById('email-input');
+    if (!input.value || !input.value.includes('@')) {
+      input.focus();
+      input.style.borderColor = '#EF4444';
+      setTimeout(() => input.style.borderColor = '', 1200);
+      return;
+    }
+    const email = input.value.trim();
+    // Show success immediately (no-cors means we can't read the response)
+    showWaitlistSuccess(email);
+    // Fire-and-forget POST to Google Sheet
+    fetch(WAITLIST_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    }).catch(() => {}); // silently ignore network errors
   }
 
   // Restore waitlist state

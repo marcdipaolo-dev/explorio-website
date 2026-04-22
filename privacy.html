@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Explorio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:          #0D1117;
+    --surface:     #151B26;
+    --muted-bg:    #1E2535;
+    --border:      #252D3D;
+    --amber:       #F5A623;
+    --amber-dim:   rgba(245,166,35,0.12);
+    --fg:          #F5F1EB;
+    --fg-muted:    rgba(245,241,235,0.70);
+    --fg-faint:    rgba(245,241,235,0.40);
+    --serif:       'Libre Baskerville', Georgia, serif;
+    --sans:        'Inter', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(13,17,23,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--serif); font-size: 22px; font-weight: 400;
+    color: var(--fg); text-decoration: none; letter-spacing: -0.01em;
+  }
+  .nav-logo span { color: var(--amber); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 500; color: var(--fg-muted);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--fg); }
+  .nav-cta {
+    background: var(--amber); color: #0D1117 !important;
+    padding: 9px 20px; border-radius: 999px; font-weight: 600;
+    font-size: 14px; text-decoration: none; transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.88; }
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+  }
+
+  /* PAGE */
+  .page-wrap {
+    max-width: 760px; margin: 0 auto; padding: 140px 48px 96px;
+  }
+  @media (max-width: 768px) {
+    .page-wrap { padding: 110px 24px 64px; }
+  }
+
+  .overline {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--amber); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .overline::before {
+    content: ''; display: block; width: 28px; height: 1px;
+    background: var(--amber);
+  }
+
+  h1 {
+    font-family: var(--serif); font-size: clamp(36px, 5vw, 52px);
+    font-weight: 400; letter-spacing: -0.01em; color: var(--fg);
+    line-height: 1.15; margin-bottom: 16px;
+  }
+  .meta {
+    font-size: 13px; color: var(--fg-faint); margin-bottom: 64px;
+  }
+
+  .policy-section {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 40px; margin-bottom: 40px;
+  }
+  .policy-section:last-of-type { border-bottom: none; }
+
+  h2 {
+    font-family: var(--serif); font-size: 22px; font-weight: 400;
+    color: var(--fg); margin-bottom: 14px;
+  }
+  p {
+    font-size: 16px; font-weight: 300; line-height: 1.7;
+    color: var(--fg-muted); margin-bottom: 12px;
+  }
+  p:last-child { margin-bottom: 0; }
+  a { color: var(--amber); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .closing-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 40px; text-align: center; margin-top: 16px;
+  }
+  .closing-card p {
+    font-family: var(--serif); font-size: 22px; font-style: italic;
+    color: var(--fg); margin-bottom: 8px;
+  }
+  .closing-card span {
+    font-size: 14px; font-weight: 300; color: var(--fg-faint);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg); border-top: 1px solid var(--border);
+    padding: 40px 48px;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; flex-wrap: wrap; align-items: center;
+    justify-content: space-between; gap: 24px;
+  }
+  .footer-logo {
+    font-family: var(--serif); font-size: 18px; color: var(--fg);
+    text-decoration: none;
+  }
+  .footer-logo span { color: var(--amber); }
+  .footer-links { display: flex; gap: 24px; list-style: none; }
+  .footer-links a {
+    font-size: 13px; color: var(--fg-faint); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--fg-muted); }
+  .footer-copy { font-size: 12px; color: var(--fg-faint); }
+  @media (max-width: 768px) {
+    footer { padding: 32px 24px; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Explori<span>o</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html#how">How it works</a></li>
+    <li><a href="index.html#cta" class="nav-cta">Join the waitlist</a></li>
+  </ul>
+</nav>
+
+<div class="page-wrap">
+  <div class="reveal">
+    <p class="overline">Privacy Policy</p>
+    <h1>Your location, your questions, your business.</h1>
+    <p class="meta">Last updated: April 2026</p>
+  </div>
+
+  <div class="reveal policy-section">
+    <h2>What we collect</h2>
+    <p>When you join the waitlist, we collect your email address — that's it. We use it to notify you when Explorio launches and for nothing else.</p>
+    <p>When you use the app, Explorio uses your device's GPS to know where you are so it can deliver relevant tour content. Your location data is used only to power the tour in real time and is not stored on our servers beyond what's needed to serve the current session.</p>
+    <p>We may collect anonymous, aggregated usage data (e.g., which features are used most often) to improve the app. This data cannot identify you.</p>
+  </div>
+
+  <div class="reveal policy-section">
+    <h2>What we don't collect</h2>
+    <p>We do not sell your data. We do not build advertising profiles. We do not share your personal information with third parties except as described below.</p>
+    <p>We don't store your conversations with Explorio on our servers after they are used to generate a response. Your curiosity is yours.</p>
+  </div>
+
+  <div class="reveal policy-section">
+    <h2>Third-party services</h2>
+    <p>Explorio uses AI infrastructure to power its conversational audio tours. Audio and text may be processed by third-party AI providers under strict data processing agreements. These providers are contractually prohibited from using your data to train their models.</p>
+    <p>Payment processing (when the app launches) will be handled entirely by Apple or Google. We never receive or store your payment details.</p>
+  </div>
+
+  <div class="reveal policy-section">
+    <h2>Data retention</h2>
+    <p>Waitlist emails are held until Explorio launches or until you ask us to remove you. To be removed from the waitlist at any time, email <a href="mailto:privacy@explorio.io">privacy@explorio.io</a> and we'll delete your record within 7 days.</p>
+  </div>
+
+  <div class="reveal policy-section">
+    <h2>Children's privacy</h2>
+    <p>Explorio is not directed at children under 13. We do not knowingly collect personal information from children. If you believe a child has submitted information to us, contact us and we will delete it promptly.</p>
+  </div>
+
+  <div class="reveal policy-section">
+    <h2>Your rights</h2>
+    <p>Depending on where you live, you may have the right to access, correct, or delete the personal data we hold about you. To exercise any of these rights, contact us at <a href="mailto:privacy@explorio.io">privacy@explorio.io</a>.</p>
+  </div>
+
+  <div class="reveal policy-section">
+    <h2>Changes to this policy</h2>
+    <p>If we make material changes to this policy, we'll update the date above and notify waitlist members by email. Continuing to use Explorio after changes take effect constitutes acceptance.</p>
+  </div>
+
+  <div class="reveal policy-section">
+    <h2>Contact</h2>
+    <p>Questions about privacy? Email <a href="mailto:privacy@explorio.io">privacy@explorio.io</a>. A human will read it — probably on a walk somewhere interesting.</p>
+  </div>
+
+  <div class="reveal closing-card">
+    <p>Short policy for a simple app.</p>
+    <span>We collect the minimum needed to make Explorio work. That's the whole idea.</span>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a class="footer-logo" href="index.html">Explori<span>o</span></a>
+    <ul class="footer-links">
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Explorio · Made for the genuinely curious.</p>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.06}s`;
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>

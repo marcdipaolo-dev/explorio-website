@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Explorio — Audio tours that listen back.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ─── TOKENS ─────────────────────────────────────────── */
+  :root {
+    --bg:          #0D1117;
+    --surface:     #151B26;
+    --muted-bg:    #1E2535;
+    --border:      #252D3D;
+    --amber:       #F5A623;
+    --amber-dim:   rgba(245,166,35,0.12);
+    --amber-ghost: rgba(245,166,35,0.15);
+    --fg:          #F5F1EB;
+    --fg-muted:    rgba(245,241,235,0.70);
+    --fg-faint:    rgba(245,241,235,0.40);
+    --page-light:  #FAF8F5;
+    --text-dark:   #1A1612;
+    --text-muted:  #7A6E63;
+    --serif:       'Libre Baskerville', Georgia, serif;
+    --sans:        'Inter', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─────────────────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    transition: background 0.4s ease, padding 0.3s ease, backdrop-filter 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(13,17,23,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 14px 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--fg);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--amber); }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--fg-muted);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--fg); }
+  .nav-cta {
+    background: var(--amber);
+    color: var(--bg) !important;
+    font-weight: 600 !important;
+    padding: 9px 20px;
+    border-radius: 999px;
+    transition: opacity 0.2s !important;
+    color: var(--bg);
+  }
+  .nav-cta:hover { opacity: 0.88; }
+  .nav-mobile-cta { display: none; }
+
+  @media (max-width: 768px) {
+    nav { padding: 18px 24px; }
+    nav.scrolled { padding: 12px 24px; }
+    .nav-links { display: none; }
+    .nav-mobile-cta {
+      display: block;
+      background: var(--amber);
+      color: var(--bg);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+    }
+  }
+
+  /* ─── HERO ────────────────────────────────────────────── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('uploads/hero-city-35ecdb17.png') center/cover no-repeat;
+    transform: scale(1.04);
+    animation: heroZoom 12s ease-out forwards;
+  }
+  @keyframes heroZoom {
+    from { transform: scale(1.04); }
+    to   { transform: scale(1.00); }
+  }
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(13,17,23,0.93) 0%,
+      rgba(13,17,23,0.58) 38%,
+      rgba(13,17,23,0.12) 68%,
+      rgba(13,17,23,0.00) 100%
+    );
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 72px 72px;
+    max-width: 760px;
+    animation: heroFadeUp 1.1s cubic-bezier(0.16,1,0.3,1) 0.3s both;
+  }
+  @keyframes heroFadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-overline {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-overline::before {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: var(--amber);
+  }
+  .hero-h1 {
+    font-family: var(--serif);
+    font-size: clamp(44px, 6.5vw, 78px);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+    margin-bottom: 22px;
+    text-wrap: pretty;
+  }
+  .hero-sub {
+    font-size: clamp(16px, 1.8vw, 19px);
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--fg-muted);
+    max-width: 520px;
+    margin-bottom: 36px;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .btn-amber {
+    background: var(--amber);
+    color: var(--bg);
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .btn-amber:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--fg-muted);
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 500;
+    padding: 13px 24px;
+    border-radius: 999px;
+    border: 1px solid rgba(245,241,235,0.25);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--fg); border-color: rgba(245,241,235,0.5); }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 28px;
+    right: 48px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.45;
+    animation: heroFadeUp 1.1s cubic-bezier(0.16,1,0.3,1) 1.2s both;
+  }
+  .hero-scroll-hint span {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--fg-faint), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; } 50% { opacity: 1; }
+  }
+
+  @media (max-width: 768px) {
+    .hero-content { padding: 0 24px 60px; text-align: center; max-width: 100%; }
+    .hero-h1 { font-size: clamp(38px, 11vw, 52px); }
+    .hero-sub { font-size: 16px; margin: 0 auto 32px; }
+    .hero-actions { justify-content: center; }
+    .hero-overline { justify-content: center; }
+    .hero-scroll-hint { display: none; }
+  }
+
+  /* ─── SECTION HELPERS ─────────────────────────────────── */
+  section { position: relative; }
+  .section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 96px 48px;
+  }
+  @media (max-width: 768px) {
+    .section-inner { padding: 64px 24px; }
+  }
+  .overline {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 18px;
+  }
+  .overline-muted {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+  }
+
+  /* fade-in on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.32s; }
+
+  /* ─── ESCAPE HOOK ─────────────────────────────────────── */
+  #escape {
+    background: var(--bg);
+    overflow: hidden;
+    position: relative;
+  }
+  #escape .section-inner {
+    padding-top: 0;
+    padding-bottom: 0;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    min-height: 520px;
+  }
+  .escape-photo {
+    flex: 0 0 50%;
+    position: relative;
+    overflow: hidden;
+  }
+  .escape-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .escape-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(13,17,23,0) 60%, rgba(13,17,23,0.85) 100%);
+  }
+  .escape-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 72px 80px 64px;
+  }
+  .escape-quote {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(26px, 3.2vw, 42px);
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--fg);
+    margin-bottom: 32px;
+    text-wrap: pretty;
+  }
+  .escape-quote em { color: var(--amber); font-style: normal; }
+  .escape-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .escape-list li {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--fg-muted);
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .escape-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--fg-faint);
+  }
+
+  @media (max-width: 900px) {
+    #escape .section-inner { flex-direction: column; min-height: auto; }
+    .escape-photo { flex: none; height: 56vw; max-height: 380px; }
+    .escape-photo::after { background: linear-gradient(to top, rgba(13,17,23,0.85) 0%, transparent 60%); }
+    .escape-text { padding: 48px 24px 64px; }
+  }
+
+  /* ─── VALUE PROP ──────────────────────────────────────── */
+  #value {
+    background: var(--page-light);
+    color: var(--text-dark);
+  }
+  .value-header { margin-bottom: 64px; }
+  .value-header h2 {
+    font-family: var(--serif);
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--text-dark);
+    margin-bottom: 16px;
+    text-wrap: pretty;
+  }
+  .value-header p {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--text-muted);
+    max-width: 560px;
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px 56px;
+  }
+  .feature-callout { }
+  .feature-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 20px;
+    color: var(--amber);
+  }
+  .feature-callout h3 {
+    font-family: var(--serif);
+    font-size: 21px;
+    font-weight: 400;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .feature-callout p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.65;
+    color: var(--text-muted);
+  }
+  @media (max-width: 900px) {
+    .features-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  /* ─── SPLIT PHOTO PANEL ───────────────────────────────── */
+  #photo-panel {
+    background: var(--bg);
+    overflow: hidden;
+  }
+  #photo-panel .section-inner {
+    padding: 0;
+    max-width: 100%;
+    display: flex;
+    min-height: 620px;
+  }
+  .panel-photo {
+    flex: 0 0 55%;
+    position: relative;
+    overflow: hidden;
+  }
+  .panel-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .panel-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(13,17,23,0.00) 55%,
+      rgba(13,17,23,0.92) 100%
+    );
+  }
+  .panel-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 80px 80px 72px;
+    max-width: 560px;
+  }
+  .panel-text h2 {
+    font-family: var(--serif);
+    font-size: clamp(30px, 3.2vw, 44px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--fg);
+    margin-bottom: 20px;
+    text-wrap: pretty;
+  }
+  .panel-text p {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--fg-muted);
+    margin-bottom: 36px;
+  }
+  @media (max-width: 900px) {
+    #photo-panel .section-inner { flex-direction: column; }
+    .panel-photo { flex: none; height: 65vw; max-height: 420px; }
+    .panel-photo::after { background: linear-gradient(to top, rgba(13,17,23,0.9) 0%, transparent 55%); }
+    .panel-text { padding: 48px 24px 64px; max-width: 100%; }
+  }
+
+  /* ─── HOW IT WORKS ────────────────────────────────────── */
+  #how {
+    background: var(--page-light);
+    color: var(--text-dark);
+  }
+  #how .section-inner { padding-bottom: 80px; }
+  .how-header { margin-bottom: 72px; }
+  .how-header h2 {
+    font-family: var(--serif);
+    font-size: clamp(30px, 3.5vw, 44px);
+    font-weight: 400;
+    color: var(--text-dark);
+    margin-bottom: 12px;
+  }
+  .how-header p { font-size: 17px; font-weight: 300; color: var(--text-muted); }
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  .steps-grid::before {
+    content: '';
+    position: absolute;
+    top: 44px;
+    left: 16.66%;
+    right: 16.66%;
+    height: 1px;
+    border-top: 1px dashed rgba(245,166,35,0.35);
+  }
+  .step {
+    padding: 0 48px 0 0;
+    position: relative;
+  }
+  .step:last-child { padding-right: 0; }
+  .step-num {
+    font-family: var(--serif);
+    font-size: 88px;
+    font-weight: 400;
+    color: rgba(245,166,35,0.12);
+    line-height: 1;
+    margin-bottom: -18px;
+    display: block;
+    user-select: none;
+  }
+  .step h3 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--text-dark);
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .step p {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.65;
+    color: var(--text-muted);
+  }
+  @media (max-width: 900px) {
+    .steps-grid { grid-template-columns: 1fr; gap: 48px; }
+    .steps-grid::before { display: none; }
+    .step { padding: 0; }
+  }
+
+  /* ─── CONVERSATION DEMO ───────────────────────────────── */
+  #conversation {
+    background: var(--bg);
+    text-align: center;
+  }
+  #conversation .section-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 96px;
+    padding-bottom: 96px;
+  }
+  #conversation .overline { margin-bottom: 16px; }
+  #conversation h2 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 400;
+    color: var(--fg);
+    margin-bottom: 16px;
+    max-width: 560px;
+    line-height: 1.25;
+    text-wrap: pretty;
+  }
+  #conversation .voice-note {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--amber);
+    letter-spacing: 0.06em;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  #conversation .voice-note::before {
+    content: '';
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--amber);
+    animation: voicePulse 1.6s ease-in-out infinite;
+  }
+  @keyframes voicePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+  .chat-window {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    width: 100%;
+    max-width: 560px;
+    text-align: left;
+    position: relative;
+  }
+  .chat-window::before {
+    content: 'EXPLORIO';
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--fg-faint);
+  }
+  .chat-messages { margin-top: 16px; display: flex; flex-direction: column; gap: 18px; }
+  .msg {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .msg.shown { opacity: 1; transform: none; }
+  .msg-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .msg-you .msg-label { color: var(--amber); text-align: right; }
+  .msg-app .msg-label { color: var(--fg-faint); }
+  .msg-bubble {
+    padding: 12px 16px;
+    border-radius: 14px;
+    font-size: 15px;
+    line-height: 1.55;
+    max-width: 88%;
+  }
+  .msg-you { align-items: flex-end; }
+  .msg-you .msg-bubble {
+    background: var(--amber-dim);
+    border: 1px solid rgba(245,166,35,0.2);
+    color: var(--fg);
+    border-radius: 14px 14px 4px 14px;
+  }
+  .msg-app .msg-bubble {
+    background: var(--muted-bg);
+    border: 1px solid var(--border);
+    color: var(--fg-muted);
+    border-radius: 4px 14px 14px 14px;
+  }
+  .msg-app .msg-bubble strong { color: var(--fg); font-weight: 500; }
+  .chat-caption {
+    margin-top: 32px;
+    font-size: 15px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--fg-faint);
+    max-width: 420px;
+  }
+
+  /* ─── CITIES STRIP ────────────────────────────────────── */
+  #cities {
+    background: var(--page-light);
+    color: var(--text-dark);
+  }
+  #cities .section-inner {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+  .cities-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 48px;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .cities-header h2 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: 400;
+    color: var(--text-dark);
+    line-height: 1.2;
+    max-width: 480px;
+  }
+  .cities-header p {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-muted);
+    max-width: 280px;
+    line-height: 1.6;
+  }
+  .cities-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .city-pill {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-dark);
+    padding: 10px 22px;
+    border: 1px solid rgba(26,22,18,0.15);
+    border-radius: 999px;
+    background: rgba(245,166,35,0.00);
+    transition: background 0.2s, border-color 0.2s;
+    cursor: default;
+  }
+  .city-pill:hover {
+    background: rgba(245,166,35,0.10);
+    border-color: rgba(245,166,35,0.4);
+  }
+
+  /* Photo mosaic */
+  .photo-mosaic {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 220px 220px;
+    gap: 12px;
+    margin-top: 56px;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .mosaic-item {
+    overflow: hidden;
+    position: relative;
+    min-height: 0;
+  }
+  .mosaic-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .mosaic-item:hover img { transform: scale(1.04); }
+  .mosaic-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+  .mosaic-item:nth-child(2) { grid-column: span 2; grid-row: 1; }
+  .mosaic-item:nth-child(3) { grid-column: 3; grid-row: 2; }
+  .mosaic-item:nth-child(4) { grid-column: 4; grid-row: 2; }
+  .mosaic-item:nth-child(5) { display: none; }
+
+  @media (max-width: 768px) {
+    .photo-mosaic { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .mosaic-item:nth-child(1) { grid-column: span 2; height: 52vw; }
+    .mosaic-item:nth-child(2) { grid-column: span 2; height: 40vw; }
+    .mosaic-item { height: 36vw; }
+  }
+
+  /* ─── TESTIMONIALS ────────────────────────────────────── */
+  #testimonials {
+    background: var(--page-light);
+    border-top: 1px solid rgba(26,22,18,0.08);
+  }
+  #testimonials .section-inner { padding-top: 64px; padding-bottom: 96px; }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .testimonial-card {
+    background: #fff;
+    border: 1px solid #E8E4DE;
+    border-radius: 16px;
+    padding: 28px;
+  }
+  .testimonial-card blockquote {
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+  }
+  .testimonial-attr {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+  }
+  @media (max-width: 900px) {
+    .testimonials-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ─── CTA SECTION ─────────────────────────────────────── */
+  #cta {
+    position: relative;
+    overflow: hidden;
+    min-height: 680px;
+    display: flex;
+    align-items: center;
+  }
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    background: url('uploads/LC4-7dac7313.jpg') center 30%/cover no-repeat;
+  }
+  .cta-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(13,17,23,0.97) 0%,
+      rgba(13,17,23,0.80) 45%,
+      rgba(13,17,23,0.45) 100%
+    );
+  }
+  .cta-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 96px 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+  .cta-inner h2 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 5vw, 62px);
+    font-weight: 400;
+    color: var(--fg);
+    margin-bottom: 16px;
+    line-height: 1.15;
+  }
+  .cta-inner > p {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--fg-muted);
+    margin-bottom: 48px;
+    max-width: 480px;
+  }
+  .waitlist-form {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    max-width: 480px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .waitlist-input {
+    flex: 1;
+    min-width: 220px;
+    background: var(--muted-bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 14px 22px;
+    font-family: var(--sans);
+    font-size: 15px;
+    color: var(--fg);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .waitlist-input::placeholder { color: rgba(156,163,175,0.7); }
+  .waitlist-input:focus { border-color: var(--amber); }
+  .waitlist-submit {
+    background: var(--amber);
+    color: var(--bg);
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+  .waitlist-submit:hover { opacity: 0.88; }
+  .waitlist-fine {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--fg-faint);
+    letter-spacing: 0.01em;
+  }
+  .waitlist-success {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--fg);
+  }
+  .waitlist-success .check {
+    width: 32px; height: 32px;
+    background: var(--amber);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .success-note { font-style: italic; color: var(--amber); font-size: 13px; margin-top: 6px; }
+  .store-badges {
+    display: flex;
+    gap: 16px;
+    margin-top: 40px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .store-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(245,241,235,0.08);
+    border: 1px solid rgba(245,241,235,0.18);
+    border-radius: 12px;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: var(--fg);
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  .store-badge svg { flex-shrink: 0; }
+  .store-badge-label { display: flex; flex-direction: column; gap: 1px; }
+  .store-badge-sub { font-size: 10px; font-weight: 400; color: var(--fg-muted); letter-spacing: 0.05em; }
+  .store-note { font-size: 12px; color: var(--fg-faint); margin-top: 12px; font-style: italic; }
+
+  @media (max-width: 600px) {
+    .cta-inner { padding: 64px 24px; }
+    .waitlist-form { flex-direction: column; align-items: stretch; }
+    .waitlist-input { min-width: 0; }
+  }
+
+  /* ─── FOOTER ──────────────────────────────────────────── */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+  }
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 48px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 24px;
+  }
+  .footer-brand .footer-logo {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--fg);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .footer-brand .footer-logo span { color: var(--amber); }
+  .footer-tagline {
+    font-size: 13px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--fg-faint);
+  }
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    list-style: none;
+  }
+  .footer-links a {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--fg-faint);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--fg-muted); }
+  .footer-social {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+  }
+  .footer-social a {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--fg-faint);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-social a:hover { color: var(--amber); }
+  .footer-copy {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    font-size: 12px;
+    color: var(--fg-faint);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 768px) {
+    .footer-inner {
+      grid-template-columns: 1fr;
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .footer-links, .footer-social { justify-content: center; }
+    .footer-copy { justify-content: center; text-align: center; }
+  }
+
+  /* ─── TWEAKS PANEL ────────────────────────────────────── */
+  #tweaks-panel {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 999;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    width: 260px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  #tweaks-panel h4 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 16px;
+  }
+  .tweak-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .tweak-row label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--fg-muted);
+  }
+  .tweak-row select, .tweak-row input[type=color] {
+    background: var(--muted-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: 13px;
+    color: var(--fg);
+    font-family: var(--sans);
+    cursor: pointer;
+    width: 100%;
+  }
+  .tweak-row input[type=color] { height: 36px; padding: 4px; cursor: pointer; }
+  .tweak-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .tweak-toggle label { font-size: 13px; color: var(--fg-muted); flex: 1; }
+  .toggle-switch {
+    width: 36px; height: 20px;
+    background: var(--muted-bg);
+    border-radius: 999px;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .toggle-switch.on { background: var(--amber); border-color: var(--amber); }
+  .toggle-knob {
+    position: absolute;
+    width: 14px; height: 14px;
+    background: white;
+    border-radius: 50%;
+    top: 2px; left: 2px;
+    transition: left 0.2s;
+  }
+  .toggle-switch.on .toggle-knob { left: 18px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-logo" href="#">Explori<span>o</span></a>
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#cities">Cities</a></li>
+    <li><a href="#cta" class="nav-cta">Join the waitlist</a></li>
+  </ul>
+  <a class="nav-mobile-cta" href="#cta">Join waitlist</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-scrim"></div>
+  <div class="hero-content">
+    <p class="hero-overline">Coming to iOS &amp; Android</p>
+    <h1 class="hero-h1">Audio tours that<br>listen back.</h1>
+    <p class="hero-sub">Most audio tours go silent the moment you get curious. Explorio is the one that doesn't.</p>
+    <div class="hero-actions">
+      <a href="#cta" class="btn-amber">Join the waitlist</a>
+      <a href="#how" class="btn-ghost">
+        See how it works
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    <span>scroll</span>
+  </div>
+</section>
+
+<!-- ESCAPE HOOK -->
+<section id="escape">
+  <div class="section-inner">
+    <div class="escape-photo reveal">
+      <img src="uploads/LO2-c3635e16.jpg" alt="Two travelers walking through golden mist on a cobblestone street">
+    </div>
+    <div class="escape-text reveal reveal-delay-1">
+      <p class="overline" style="color:var(--amber)">The tour you always hoped you'd get</p>
+      <p class="escape-quote">No group. No schedule.<br><em>No waiting for forty strangers to catch up.</em></p>
+      <ul class="escape-list">
+        <li>Go at your own pace — linger, backtrack, wander</li>
+        <li>Not a script written once, read to everyone forever</li>
+        <li>No upsell, no tip jar, no hidden agenda</li>
+        <li>Not silent the moment you get curious</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- VALUE PROP -->
+<section id="value">
+  <div class="section-inner">
+    <div class="value-header reveal">
+      <p class="overline-muted">What makes Explorio different</p>
+      <h2>A guide who knows everything.<br>And answers.</h2>
+      <p>Most audio tours play the same script to everyone. Explorio listens to where you are, what you've heard, and what you want to know more about.</p>
+    </div>
+    <div class="features-grid">
+
+      <div class="feature-callout reveal">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        <h3>Ask anything. Actually get an answer.</h3>
+        <p>Hear something interesting and want to know more? Just ask. Explorio is the first walking tour you can have a real conversation with — no scripted loops, no dead ends.</p>
+      </div>
+
+      <div class="feature-callout reveal reveal-delay-1">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>
+        </svg>
+        <h3>Built around what you care about.</h3>
+        <p>Tell Explorio you're into food history, medieval architecture, or local scandal — and it shapes the tour around you. Not a one-size-fits-all script. Your city, your interests.</p>
+      </div>
+
+      <div class="feature-callout reveal reveal-delay-2">
+        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <h3>No group. No clock. No catching up.</h3>
+        <p>Linger at the fountain. Skip the square you've seen before. Explorio never rushes you, never waits for stragglers, and definitely never tries to sell you lunch.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SPLIT PHOTO PANEL -->
+<section id="photo-panel">
+  <div class="section-inner">
+    <div class="panel-photo reveal">
+      <img src="uploads/LC5-28d9aad0.jpg" alt="Couple overlooking Paris at sunset with AirPods">
+    </div>
+    <div class="panel-text reveal reveal-delay-1">
+      <p class="overline">The local friend who lives there</p>
+      <h2>The guide who knows the story behind the story.</h2>
+      <p>Explorio is like a good friend grabbing your arm and saying "Come on, let me show you." Not a docent. Not a pamphlet. Someone who's genuinely excited about this place — and who'll stop and explain anything you ask.</p>
+      <a href="#cta" class="btn-ghost" style="align-self:flex-start">Join the waitlist →</a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-inner">
+    <div class="how-header reveal">
+      <p class="overline-muted">As simple as walking</p>
+      <h2>Three steps. Ask questions as you go.</h2>
+      <p>No planning needed. No app tutorial. Just show up somewhere interesting.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step reveal">
+        <span class="step-num">1</span>
+        <h3>Just show up somewhere</h3>
+        <p>Explorio knows where you are. Tell it what you're into — history, food, architecture, local gossip — and it shapes a tour around you before you take your first step.</p>
+      </div>
+      <div class="step reveal reveal-delay-1">
+        <span class="step-num">2</span>
+        <h3>Press play and pocket your phone</h3>
+        <p>Stories start automatically as you walk. No staring at a screen, no tapping through menus. Just put your phone in your pocket and go.</p>
+      </div>
+      <div class="step reveal reveal-delay-2">
+        <span class="step-num">3</span>
+        <h3>Ask anything</h3>
+        <p>Hear something you want to know more about? Just ask. Explorio answers — then keeps going. It's the part no other walking tour can do.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONVERSATION DEMO -->
+<section id="conversation">
+  <div class="section-inner">
+    <p class="overline reveal">The moment no other tour offers</p>
+    <h2 class="reveal reveal-delay-1">Every tour is a conversation.<br>Not a broadcast.</h2>
+    <p class="voice-note reveal reveal-delay-1">Conversations can be by voice or text</p>
+    <div class="chat-window reveal reveal-delay-2" id="chat-window">
+      <div class="chat-messages" id="chat-messages">
+        <div class="msg msg-you" id="msg-1">
+          <span class="msg-label">You</span>
+          <div class="msg-bubble">Who built this fountain?</div>
+        </div>
+        <div class="msg msg-app" id="msg-2">
+          <span class="msg-label">Explorio</span>
+          <div class="msg-bubble">That was Cardinal Scipione Borghese — nephew of Pope Paul V and arguably <strong>the most ambitious art collector of the 17th century</strong>. He commissioned Bernini when Bernini was just 25. Want to know what they argued about?</div>
+        </div>
+        <div class="msg msg-you" id="msg-3">
+          <span class="msg-label">You</span>
+          <div class="msg-bubble">Yes.</div>
+        </div>
+        <div class="msg msg-app" id="msg-4">
+          <span class="msg-label">Explorio</span>
+          <div class="msg-bubble">Money, mostly. And marble. Bernini wanted to use the good stuff — Carrara. The Cardinal told him to use what was already in the warehouse. <strong>Bernini carved it anyway and sent him the bill.</strong> The Cardinal paid it. That tells you everything about both of them.</div>
+        </div>
+      </div>
+    </div>
+    <p class="chat-caption reveal reveal-delay-3">Illustrated here as text — in the app, this is a real conversation in a voice that sounds like a person who actually knows this place.</p>
+  </div>
+</section>
+
+<!-- CITIES + MOSAIC -->
+<section id="cities">
+  <div class="section-inner">
+    <div class="cities-header reveal">
+      <div>
+        <p class="overline-muted">Wherever you are</p>
+        <h2>Step outside.<br>Explorio takes it from there.</h2>
+      </div>
+      <p>Cities, museums, trails, road trips — if there's a story there, Explorio knows it. No setup. No planning. Just go.</p>
+    </div>
+    <div class="photo-mosaic reveal reveal-delay-2">
+      <div class="mosaic-item"><img src="uploads/LC1-d0ec52eb.jpg" alt="Couple on misty cobblestone alley"></div>
+      <div class="mosaic-item"><img src="uploads/LC2-c737a29b.jpg" alt="Young man with AirPods on ancient steps"></div>
+      <div class="mosaic-item"><img src="uploads/PC3-a1effd22.jpg" alt="Friends in golden-hour street"></div>
+      <div class="mosaic-item"><img src="uploads/hero-museum-f2189f16.png" alt="Woman alone in grand museum hall"></div>
+      <div class="mosaic-item"><img src="uploads/PC1-8c4498c1.jpg" alt="Two women with earbuds at a fountain"></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-inner">
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <blockquote>"I asked it why the cathedral was facing the wrong direction. It told me. Then told me three other things I never would have found in a guidebook."</blockquote>
+        <p class="testimonial-attr">Sofia M. · Rome, Beta</p>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-1">
+        <blockquote>"Every other audio tour I've tried goes silent between stops. Explorio kept talking — and when I asked a follow-up, it actually answered. That's never happened before."</blockquote>
+        <p class="testimonial-attr">James K. · Prague, Beta</p>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-2">
+        <blockquote>"I lingered for forty minutes at one square because I kept asking questions. I've been to that city three times and never knew any of that."</blockquote>
+        <p class="testimonial-attr">Anya R. · Istanbul, Beta</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-bg"></div>
+  <div class="cta-scrim"></div>
+  <div class="cta-inner">
+    <p class="overline reveal" style="color:var(--amber)">Be first to ask</p>
+    <h2 class="reveal reveal-delay-1">The guide that answers<br>is almost here.</h2>
+    <p class="reveal reveal-delay-2">Explorio launches soon on iOS and Android. Join the waitlist and be first to explore — and first to ask.</p>
+
+    <div class="waitlist-form reveal reveal-delay-3" id="waitlist-form">
+      <input class="waitlist-input" type="email" placeholder="Your email address" id="email-input" autocomplete="email">
+      <button class="waitlist-submit" id="waitlist-btn" onclick="handleWaitlist()">Join the waitlist</button>
+    </div>
+    <p class="waitlist-fine reveal reveal-delay-3">No spam. We'll reach out when Explorio launches. That's it.</p>
+
+    <div class="waitlist-success" id="waitlist-success">
+      <div class="check">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0D1117" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div>
+        <div>You're on the list.</div>
+        <div class="success-note">We'll be in touch — with a question worth asking.</div>
+      </div>
+    </div>
+
+    <div class="store-badges reveal">
+      <div class="store-badge">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        <div class="store-badge-label">
+          <span class="store-badge-sub">Coming soon</span>
+          <span>App Store</span>
+        </div>
+      </div>
+      <div class="store-badge">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.65.19.96.07l11.48-6.63-2.47-2.47-9.97 9.03zM.64 1.33C.24 1.67 0 2.24 0 3v18c0 .76.24 1.33.64 1.67l.08.07 10.08-10.08v-.24L.72 1.26l-.08.07zM20.33 10.53l-2.56-1.48-2.8 2.8 2.8 2.8 2.57-1.48c.74-.42.74-1.1 0-1.52l-.01-.12zM4.14.24L15.62 6.87l-2.47 2.47L4.14.24z"/></svg>
+        <div class="store-badge-label">
+          <span class="store-badge-sub">Coming soon</span>
+          <span>Google Play</span>
+        </div>
+      </div>
+    </div>
+    <p class="store-note reveal">Launching on iOS &amp; Android · 2026</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="footer-logo" href="#">Explori<span>o</span></a>
+      <p class="footer-tagline">The walking tour that talks back.</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <ul class="footer-social">
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">TikTok</a></li>
+    </ul>
+    <div class="footer-copy">
+      <span>© 2026 Explorio</span>
+      <span>Made for the genuinely curious.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- TWEAKS PANEL -->
+<div id="tweaks-panel">
+  <h4>Tweaks</h4>
+  <div class="tweak-row">
+    <label>Hero image</label>
+    <select id="tweak-hero" onchange="applyTweaks()">
+      <option value="uploads/hero-city-35ecdb17.png">City street (golden hour)</option>
+      <option value="uploads/hero-museum-f2189f16.png">Museum hall</option>
+      <option value="uploads/LC5-28d9aad0.jpg">Paris overlook</option>
+    </select>
+  </div>
+  <div class="tweak-row">
+    <label>Accent color</label>
+    <input type="color" id="tweak-amber" value="#F5A623" onchange="applyTweaks()">
+  </div>
+  <div class="tweak-toggle">
+    <label>Animate chat on load</label>
+    <div class="toggle-switch on" id="tweak-chat-toggle" onclick="toggleChat()">
+      <div class="toggle-knob"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  }, { passive: true });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // Chat animation
+  let chatAnimated = false;
+  let chatEnabled = true;
+  const chatObs = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && !chatAnimated && chatEnabled) {
+      chatAnimated = true;
+      animateChat();
+    }
+  }, { threshold: 0.4 });
+  chatObs.observe(document.getElementById('chat-window'));
+
+  function animateChat() {
+    const msgs = document.querySelectorAll('.msg');
+    msgs.forEach((m, i) => {
+      setTimeout(() => m.classList.add('shown'), i * 700 + 300);
+    });
+  }
+
+  // Waitlist
+  function handleWaitlist() {
+    const input = document.getElementById('email-input');
+    if (!input.value || !input.value.includes('@')) {
+      input.focus();
+      input.style.borderColor = '#EF4444';
+      setTimeout(() => input.style.borderColor = '', 1200);
+      return;
+    }
+    document.getElementById('waitlist-form').style.display = 'none';
+    document.querySelector('.waitlist-fine').style.display = 'none';
+    const success = document.getElementById('waitlist-success');
+    success.style.display = 'flex';
+    success.style.opacity = '0';
+    success.style.transform = 'translateY(8px)';
+    success.style.transition = 'opacity 0.5s, transform 0.5s';
+    requestAnimationFrame(() => {
+      success.style.opacity = '1';
+      success.style.transform = 'none';
+    });
+    localStorage.setItem('explorio_waitlist', input.value);
+  }
+
+  // Restore waitlist state
+  if (localStorage.getItem('explorio_waitlist')) {
+    document.getElementById('waitlist-form').style.display = 'none';
+    document.querySelector('.waitlist-fine').style.display = 'none';
+    document.getElementById('waitlist-success').style.display = 'flex';
+  }
+
+  // Enter key on waitlist
+  document.getElementById('email-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleWaitlist();
+  });
+
+  // TWEAKS
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "heroImage": "uploads/hero-city-35ecdb17.png",
+    "accentColor": "#F5A623",
+    "chatAnimate": true
+  }/*EDITMODE-END*/;
+
+  let tweakState = { ...TWEAK_DEFAULTS };
+
+  function applyTweaks() {
+    const heroVal = document.getElementById('tweak-hero').value;
+    const amberVal = document.getElementById('tweak-amber').value;
+    document.querySelector('.hero-bg').style.backgroundImage = `url('${heroVal}')`;
+    document.documentElement.style.setProperty('--amber', amberVal);
+    tweakState.heroImage = heroVal;
+    tweakState.accentColor = amberVal;
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { heroImage: heroVal, accentColor: amberVal } }, '*');
+  }
+
+  function toggleChat() {
+    const toggle = document.getElementById('tweak-chat-toggle');
+    chatEnabled = !toggle.classList.contains('on');
+    toggle.classList.toggle('on');
+    tweakState.chatAnimate = chatEnabled;
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { chatAnimate: chatEnabled } }, '*');
+  }
+
+  // Apply saved tweaks
+  function loadTweaks(state) {
+    if (state.heroImage) {
+      document.getElementById('tweak-hero').value = state.heroImage;
+      document.querySelector('.hero-bg').style.backgroundImage = `url('${state.heroImage}')`;
+    }
+    if (state.accentColor) {
+      document.getElementById('tweak-amber').value = state.accentColor;
+      document.documentElement.style.setProperty('--amber', state.accentColor);
+    }
+    if (state.chatAnimate === false) {
+      chatEnabled = false;
+      document.getElementById('tweak-chat-toggle').classList.remove('on');
+      document.querySelectorAll('.msg').forEach(m => m.classList.add('shown'));
+    }
+  }
+  loadTweaks(TWEAK_DEFAULTS);
+
+  // Tweaks panel toggle
+  window.addEventListener('message', e => {
+    if (e.data?.type === '__activate_edit_mode') {
+      document.getElementById('tweaks-panel').style.display = 'block';
+    }
+    if (e.data?.type === '__deactivate_edit_mode') {
+      document.getElementById('tweaks-panel').style.display = 'none';
+    }
+  });
+  window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+</script>
+</body>
+</html>

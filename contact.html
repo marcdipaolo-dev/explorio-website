@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Explorio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:          #0D1117;
+    --surface:     #151B26;
+    --muted-bg:    #1E2535;
+    --border:      #252D3D;
+    --amber:       #F5A623;
+    --amber-dim:   rgba(245,166,35,0.12);
+    --fg:          #F5F1EB;
+    --fg-muted:    rgba(245,241,235,0.70);
+    --fg-faint:    rgba(245,241,235,0.40);
+    --serif:       'Libre Baskerville', Georgia, serif;
+    --sans:        'Inter', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(13,17,23,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--serif); font-size: 22px; font-weight: 400;
+    color: var(--fg); text-decoration: none; letter-spacing: -0.01em;
+  }
+  .nav-logo span { color: var(--amber); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 500; color: var(--fg-muted);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--fg); }
+  .nav-cta {
+    background: var(--amber); color: #0D1117 !important;
+    padding: 9px 20px; border-radius: 999px; font-weight: 600;
+    font-size: 14px; text-decoration: none; transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.88; }
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+  }
+
+  .page-wrap {
+    max-width: 760px; margin: 0 auto; padding: 140px 48px 96px;
+  }
+  @media (max-width: 768px) {
+    .page-wrap { padding: 110px 24px 64px; }
+  }
+
+  .overline {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--amber); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .overline::before {
+    content: ''; display: block; width: 28px; height: 1px;
+    background: var(--amber);
+  }
+
+  h1 {
+    font-family: var(--serif); font-size: clamp(36px, 5vw, 52px);
+    font-weight: 400; letter-spacing: -0.01em; color: var(--fg);
+    line-height: 1.15; margin-bottom: 20px;
+  }
+  .intro {
+    font-size: 17px; font-weight: 300; line-height: 1.7;
+    color: var(--fg-muted); max-width: 560px; margin-bottom: 64px;
+  }
+
+  /* Contact cards */
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    margin-bottom: 64px;
+  }
+  @media (max-width: 600px) {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+
+  .contact-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 32px;
+    transition: border-color 0.2s;
+  }
+  .contact-card:hover { border-color: rgba(245,166,35,0.3); }
+
+  .card-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--amber); margin-bottom: 12px;
+  }
+  .card-title {
+    font-family: var(--serif); font-size: 20px; font-weight: 400;
+    color: var(--fg); margin-bottom: 10px;
+  }
+  .card-body {
+    font-size: 14px; font-weight: 300; line-height: 1.65;
+    color: var(--fg-muted); margin-bottom: 20px;
+  }
+  .card-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 14px; font-weight: 500; color: var(--amber);
+    text-decoration: none; transition: opacity 0.2s;
+  }
+  .card-link:hover { opacity: 0.8; }
+  .card-link::after { content: '→'; }
+
+  /* Form */
+  .form-section {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 48px;
+  }
+  @media (max-width: 600px) {
+    .form-section { padding: 32px 24px; }
+  }
+
+  .form-heading {
+    font-family: var(--serif); font-size: 28px; font-weight: 400;
+    color: var(--fg); margin-bottom: 8px;
+  }
+  .form-subhead {
+    font-size: 15px; font-weight: 300; color: var(--fg-muted);
+    margin-bottom: 36px;
+  }
+
+  .form-row { margin-bottom: 20px; }
+  .form-row label {
+    display: block; font-size: 12px; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--fg-faint); margin-bottom: 8px;
+  }
+  .form-row input,
+  .form-row select,
+  .form-row textarea {
+    width: 100%; background: var(--muted-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 18px;
+    font-family: var(--sans); font-size: 15px; font-weight: 300;
+    color: var(--fg); outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-row input::placeholder,
+  .form-row textarea::placeholder { color: var(--fg-faint); }
+  .form-row input:focus,
+  .form-row select:focus,
+  .form-row textarea:focus { border-color: var(--amber); }
+  .form-row select { appearance: none; cursor: pointer; }
+  .form-row select option { background: var(--surface); }
+  .form-row textarea { resize: vertical; min-height: 140px; }
+
+  .form-two-col {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  @media (max-width: 600px) {
+    .form-two-col { grid-template-columns: 1fr; }
+  }
+
+  .btn-submit {
+    background: var(--amber); color: #0D1117;
+    border: none; border-radius: 999px;
+    padding: 14px 32px; font-family: var(--sans);
+    font-size: 15px; font-weight: 600; cursor: pointer;
+    transition: opacity 0.2s; margin-top: 8px;
+  }
+  .btn-submit:hover { opacity: 0.88; }
+
+  .form-fine {
+    font-size: 12px; color: var(--fg-faint); margin-top: 16px;
+  }
+
+  /* Success state */
+  .form-success {
+    display: none; flex-direction: column; align-items: center;
+    text-align: center; padding: 16px 0;
+  }
+  .success-check {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--amber-dim); border: 1px solid rgba(245,166,35,0.3);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+  }
+  .success-check svg { color: var(--amber); }
+  .success-title {
+    font-family: var(--serif); font-size: 24px; color: var(--fg);
+    margin-bottom: 8px;
+  }
+  .success-sub {
+    font-size: 15px; font-weight: 300; font-style: italic;
+    color: var(--amber);
+  }
+
+  footer {
+    background: var(--bg); border-top: 1px solid var(--border);
+    padding: 40px 48px; margin-top: 96px;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; flex-wrap: wrap; align-items: center;
+    justify-content: space-between; gap: 24px;
+  }
+  .footer-logo {
+    font-family: var(--serif); font-size: 18px; color: var(--fg);
+    text-decoration: none;
+  }
+  .footer-logo span { color: var(--amber); }
+  .footer-links { display: flex; gap: 24px; list-style: none; }
+  .footer-links a {
+    font-size: 13px; color: var(--fg-faint); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--fg-muted); }
+  .footer-copy { font-size: 12px; color: var(--fg-faint); }
+  @media (max-width: 768px) {
+    footer { padding: 32px 24px; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Explori<span>o</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html#how">How it works</a></li>
+    <li><a href="index.html#cta" class="nav-cta">Join the waitlist</a></li>
+  </ul>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="reveal">
+    <p class="overline">Contact</p>
+    <h1>We're easy to find.</h1>
+    <p class="intro">Small team. Real people. We read everything that comes in — and we reply.</p>
+  </div>
+
+  <div class="contact-grid reveal">
+    <div class="contact-card">
+      <p class="card-label">General</p>
+      <p class="card-title">Say hello</p>
+      <p class="card-body">Questions about the app, press inquiries, partnership ideas — anything that doesn't fit a category.</p>
+      <a href="mailto:hello@explorio.io" class="card-link">hello@explorio.io</a>
+    </div>
+    <div class="contact-card">
+      <p class="card-label">Privacy &amp; Data</p>
+      <p class="card-title">Data requests</p>
+      <p class="card-body">To access, correct, or delete your personal data, or to ask anything about how we handle your information.</p>
+      <a href="mailto:privacy@explorio.io" class="card-link">privacy@explorio.io</a>
+    </div>
+  </div>
+
+  <div class="form-section reveal">
+    <h2 class="form-heading">Send us a message.</h2>
+    <p class="form-subhead">We'll get back to you within a day or two — probably sooner.</p>
+
+    <form id="contact-form" onsubmit="handleSubmit(event)" novalidate>
+      <div class="form-two-col">
+        <div class="form-row">
+          <label for="cf-name">Your name</label>
+          <input type="text" id="cf-name" placeholder="First and last" required>
+        </div>
+        <div class="form-row">
+          <label for="cf-email">Email address</label>
+          <input type="email" id="cf-email" placeholder="you@example.com" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="cf-subject">What's this about?</label>
+        <select id="cf-subject">
+          <option value="">Select a topic…</option>
+          <option value="waitlist">Waitlist question</option>
+          <option value="product">Product feedback</option>
+          <option value="press">Press or media</option>
+          <option value="partnership">Partnership</option>
+          <option value="privacy">Privacy or data</option>
+          <option value="other">Something else</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="cf-message">Your message</label>
+        <textarea id="cf-message" placeholder="Tell us what's on your mind…" required></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Send message</button>
+      <p class="form-fine">We'll reply to your email. No auto-responders, no ticket numbers.</p>
+    </form>
+
+    <div class="form-success" id="form-success">
+      <div class="success-check">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <p class="success-title">Message sent.</p>
+      <p class="success-sub">We'll be in touch — with a question worth asking.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a class="footer-logo" href="index.html">Explori<span>o</span></a>
+    <ul class="footer-links">
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Explorio · Made for the genuinely curious.</p>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.08}s`;
+    observer.observe(el);
+  });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const name = document.getElementById('cf-name').value.trim();
+    const email = document.getElementById('cf-email').value.trim();
+    const message = document.getElementById('cf-message').value.trim();
+
+    let valid = true;
+    [document.getElementById('cf-name'), document.getElementById('cf-email'), document.getElementById('cf-message')].forEach(el => {
+      if (!el.value.trim() || (el.type === 'email' && !el.value.includes('@'))) {
+        el.style.borderColor = '#EF4444';
+        setTimeout(() => el.style.borderColor = '', 1400);
+        valid = false;
+      }
+    });
+    if (!valid) return;
+
+    // Open mailto as fallback until backend is wired
+    const subject = encodeURIComponent(document.getElementById('cf-subject').value || 'Message from explorio.io');
+    const body = encodeURIComponent(`Name: ${name}\n\n${message}`);
+    window.location.href = `mailto:hello@explorio.io?subject=${subject}&body=${body}`;
+
+    document.getElementById('contact-form').style.display = 'none';
+    const success = document.getElementById('form-success');
+    success.style.display = 'flex';
+    success.style.opacity = '0';
+    success.style.transform = 'translateY(8px)';
+    success.style.transition = 'opacity 0.5s, transform 0.5s';
+    requestAnimationFrame(() => {
+      success.style.opacity = '1';
+      success.style.transform = 'none';
+    });
+  }
+</script>
+</body>
+</html>

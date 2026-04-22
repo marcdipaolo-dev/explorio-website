@@ -1449,6 +1449,7 @@
 
   function handleWaitlist() {
     const input = document.getElementById('email-input');
+    const btn = document.getElementById('waitlist-btn');
     if (!input.value || !input.value.includes('@')) {
       input.focus();
       input.style.borderColor = '#EF4444';
@@ -1456,6 +1457,9 @@
       return;
     }
     const email = input.value.trim();
+    btn.disabled = true;
+    btn.textContent = 'Joining…';
+    btn.style.opacity = '0.6';
     fetch(WAITLIST_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

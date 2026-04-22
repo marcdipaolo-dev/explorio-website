@@ -1430,7 +1430,7 @@
   }
 
   // Waitlist
-  const WAITLIST_URL = 'https://script.google.com/macros/s/AKfycbzJD7WNyfGqPx999tptx7PW7XduOvfCs-I-HmF0VD6FI8PZwRe2WIdCBG74LZ0yLhtf/exec';
+  const WAITLIST_URL = 'https://explorio-waitlist.marc-dipaolo.workers.dev';
 
   function showWaitlistSuccess(email) {
     document.getElementById('waitlist-form').style.display = 'none';
@@ -1456,8 +1456,13 @@
       return;
     }
     const email = input.value.trim();
-    new Image().src = `${WAITLIST_URL}?email=${encodeURIComponent(email)}`;
-    showWaitlistSuccess(email);
+    fetch(WAITLIST_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    })
+    .catch(() => {})
+    .finally(() => showWaitlistSuccess(email));
   }
 
   // Restore waitlist state

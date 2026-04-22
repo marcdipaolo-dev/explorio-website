@@ -8,11 +8,8 @@ export async function onRequestPost(context) {
       return Response.json({ error: 'Invalid email' }, { status: 400 });
     }
 
-    await fetch(SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
-    });
+    const url = `${SCRIPT_URL}?email=${encodeURIComponent(email)}`;
+    await fetch(url);
 
     return Response.json({ result: 'ok' });
   } catch (err) {

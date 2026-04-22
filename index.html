@@ -1456,9 +1456,8 @@
       return;
     }
     const email = input.value.trim();
-    fetch(`${WAITLIST_URL}?email=${encodeURIComponent(email)}`)
-    .catch(() => {})
-    .finally(() => showWaitlistSuccess(email));
+    new Image().src = `${WAITLIST_URL}?email=${encodeURIComponent(email)}`;
+    showWaitlistSuccess(email);
   }
 
   // Restore waitlist state

@@ -1456,15 +1456,13 @@
       return;
     }
     const email = input.value.trim();
-    // Show success immediately (no-cors means we can't read the response)
-    showWaitlistSuccess(email);
-    // Fire-and-forget POST to Google Sheet
-    fetch(WAITLIST_URL, {
+    fetch('/api/waitlist', {
       method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email })
-    }).catch(() => {}); // silently ignore network errors
+    })
+    .catch(() => {})
+    .finally(() => showWaitlistSuccess(email));
   }
 
   // Restore waitlist state

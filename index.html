@@ -1462,7 +1462,7 @@
     fetch(WAITLIST_URL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify({ email })
     }).catch(() => {}); // silently ignore network errors
   }

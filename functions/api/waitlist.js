@@ -1,4 +1,4 @@
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzvI5tahFghAKUCGuQGa8GMO636oUo3r9HK0Vv2dfTGBIc0F3_dzsJMZPtW00NdZE4Z/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzJD7WNyfGqPx999tptx7PW7XduOvfCs-I-HmF0VD6FI8PZwRe2WIdCBG74LZ0yLhtf/exec';
 
 export async function onRequestPost(context) {
   try {

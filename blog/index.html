@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BF0G306RFP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-BF0G306RFP');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Explorio</title>
+<meta name="description" content="Stories, travel tips, and behind-the-scenes notes from the team building the walking tour that talks back.">
+<link rel="canonical" href="https://explorio.io/blog">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Explorio">
+<meta property="og:url" content="https://explorio.io/blog">
+<meta property="og:title" content="Blog — Explorio">
+<meta property="og:description" content="Stories, travel tips, and behind-the-scenes notes from the team building the walking tour that talks back.">
+<meta property="og:image" content="https://explorio.io/uploads/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Blog — Explorio">
+<meta name="twitter:description" content="Stories, travel tips, and behind-the-scenes notes from the team building the walking tour that talks back.">
+<meta name="twitter:image" content="https://explorio.io/uploads/og-image.png">
+
+<!-- Schema: Blog -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "@id": "https://explorio.io/blog#blog",
+  "name": "Explorio Blog",
+  "url": "https://explorio.io/blog",
+  "publisher": { "@id": "https://explorio.io/#organization" }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg:          #0D1117;
+    --surface:     #151B26;
+    --muted-bg:    #1E2535;
+    --border:      #252D3D;
+    --amber:       #F5A623;
+    --amber-dim:   rgba(245,166,35,0.12);
+    --fg:          #F5F1EB;
+    --fg-muted:    rgba(245,241,235,0.70);
+    --fg-faint:    rgba(245,241,235,0.40);
+    --page-light:  #FAF8F5;
+    --text-dark:   #1A1612;
+    --text-muted:  #7A6E63;
+    --serif:       'Libre Baskerville', Georgia, serif;
+    --sans:        'Inter', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--page-light);
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(13,17,23,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--serif); font-size: 22px; font-weight: 400;
+    color: var(--fg); text-decoration: none; letter-spacing: -0.01em;
+  }
+  .nav-logo span { color: var(--amber); }
+  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 500; color: var(--fg-muted);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--fg); }
+  .nav-links a.active { color: var(--amber); }
+  .nav-cta {
+    background: var(--amber); color: #0D1117 !important;
+    padding: 9px 20px; border-radius: 999px; font-weight: 600;
+    font-size: 14px; text-decoration: none; transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.88; }
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+  }
+
+  /* HEADER */
+  #blog-header {
+    background: var(--bg);
+    padding: 152px 48px 72px;
+    text-align: center;
+  }
+  .header-inner { max-width: 720px; margin: 0 auto; }
+  .overline {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--amber); margin-bottom: 20px;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+  }
+  .overline::before, .overline::after {
+    content: ''; display: block; width: 28px; height: 1px; background: var(--amber);
+  }
+  #blog-header h1 {
+    font-family: var(--serif); font-size: clamp(36px, 5vw, 56px);
+    font-weight: 400; letter-spacing: -0.01em; color: var(--fg);
+    line-height: 1.15; margin-bottom: 18px; text-wrap: pretty;
+  }
+  #blog-header > .header-inner > p {
+    font-size: 17px; font-weight: 300; line-height: 1.65;
+    color: var(--fg-muted); margin-bottom: 44px;
+  }
+
+  /* SEARCH */
+  .search-shell { position: relative; max-width: 480px; margin: 0 auto; }
+  .search-icon {
+    position: absolute; left: 20px; top: 50%; transform: translateY(-50%);
+    color: var(--fg-faint); pointer-events: none;
+  }
+  #search-input {
+    width: 100%;
+    background: var(--muted-bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 15px 22px 15px 48px;
+    font-family: var(--sans);
+    font-size: 15px;
+    color: var(--fg);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  #search-input::placeholder { color: var(--fg-faint); }
+  #search-input:focus { border-color: var(--amber); }
+
+  /* FILTER BAR */
+  #filter-bar {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 24px 48px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .filter-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; flex-wrap: wrap;
+  }
+  .tag-pills { display: flex; gap: 10px; flex-wrap: wrap; }
+  .tag-pill {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--fg-muted);
+    padding: 8px 18px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+  }
+  .tag-pill:hover { color: var(--fg); border-color: rgba(245,241,235,0.4); }
+  .tag-pill.active {
+    background: var(--amber-dim);
+    border-color: rgba(245,166,35,0.4);
+    color: var(--amber);
+  }
+  .result-count {
+    font-size: 13px; color: var(--fg-faint); white-space: nowrap;
+  }
+
+  /* GRID */
+  #posts-section { background: var(--page-light); padding: 64px 48px 112px; }
+  .posts-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .post-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #E8E4DE;
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: cardIn 0.5s ease forwards;
+  }
+  @keyframes cardIn { to { opacity: 1; transform: none; } }
+  .post-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(26,22,18,0.10);
+  }
+  .post-card-media { position: relative; aspect-ratio: 16/10; overflow: hidden; background: var(--muted-bg); }
+  .post-card-media img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.5s ease;
+  }
+  .post-card:hover .post-card-media img { transform: scale(1.06); }
+  .post-card-category {
+    position: absolute; top: 14px; left: 14px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text-dark);
+    background: rgba(250,248,245,0.92);
+    padding: 6px 12px; border-radius: 999px;
+  }
+  .post-card-featured {
+    position: absolute; top: 14px; right: 14px;
+    display: flex; align-items: center; gap: 5px;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--bg);
+    background: var(--amber);
+    padding: 6px 12px 6px 10px; border-radius: 999px;
+  }
+  .post-card-body { padding: 22px 24px 24px; display: flex; flex-direction: column; flex: 1; }
+  .post-card-body h2 {
+    font-family: var(--serif); font-size: 20px; font-weight: 400; line-height: 1.32;
+    color: var(--text-dark); margin-bottom: 10px;
+  }
+  .post-card-body p {
+    font-size: 14.5px; font-weight: 400; line-height: 1.6;
+    color: var(--text-muted); margin-bottom: 18px; flex: 1;
+  }
+  .post-card-meta {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 500; color: var(--text-muted);
+    padding-top: 16px; border-top: 1px solid #EFEBE5;
+  }
+  .post-card-meta .dot { opacity: 0.5; }
+
+  .no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 64px 24px;
+  }
+  .no-results p:first-child {
+    font-family: var(--serif); font-style: italic; font-size: 22px;
+    color: var(--text-dark); margin-bottom: 8px;
+  }
+  .no-results p:last-child { font-size: 14px; color: var(--text-muted); }
+
+  @media (max-width: 980px) {
+    .posts-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    #blog-header { padding: 128px 24px 56px; }
+    #filter-bar { padding: 18px 24px; }
+    .filter-inner { justify-content: flex-start; }
+    #posts-section { padding: 40px 24px 80px; }
+    .posts-grid { grid-template-columns: 1fr; gap: 24px; }
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg); border-top: 1px solid var(--border);
+    padding: 40px 48px;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; flex-wrap: wrap; align-items: center;
+    justify-content: space-between; gap: 24px;
+  }
+  .footer-logo {
+    font-family: var(--serif); font-size: 18px; color: var(--fg);
+    text-decoration: none;
+  }
+  .footer-logo span { color: var(--amber); }
+  .footer-links { display: flex; gap: 24px; list-style: none; }
+  .footer-links a {
+    font-size: 13px; color: var(--fg-faint); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--fg-muted); }
+  .footer-copy { font-size: 12px; color: var(--fg-faint); }
+  @media (max-width: 768px) {
+    footer { padding: 32px 24px; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">Explori<span>o</span></a>
+  <ul class="nav-links">
+    <li><a href="/#how">How it works</a></li>
+    <li><a href="/blog" class="active">Blog</a></li>
+    <li><a href="/#cta" class="nav-cta">Join the waitlist</a></li>
+  </ul>
+</nav>
+
+<header id="blog-header">
+  <div class="header-inner">
+    <p class="overline">The Explorio Journal</p>
+    <h1>Stories worth stopping for.</h1>
+    <p>Travel tips, behind-the-scenes notes, and the occasional rabbit hole from the team building the tour that talks back.</p>
+    <div class="search-shell">
+      <svg class="search-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="search-input" type="text" placeholder="Search stories, cities, topics…" autocomplete="off">
+    </div>
+  </div>
+</header>
+
+<div id="filter-bar">
+  <div class="filter-inner">
+    <div class="tag-pills" id="tag-pills"></div>
+    <p class="result-count" id="result-count"></p>
+  </div>
+</div>
+
+<section id="posts-section">
+  <div class="posts-grid" id="posts-grid">
+    <!-- rendered by JS -->
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <a class="footer-logo" href="/">Explori<span>o</span></a>
+    <ul class="footer-links">
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/privacy">Privacy</a></li>
+      <li><a href="/terms">Terms</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Explorio · Made for the genuinely curious.</p>
+  </div>
+</footer>
+
+<script>
+  let allPosts = [];
+  let activeTag = 'All';
+  let query = '';
+
+  function formatDate(iso) {
+    const d = new Date(iso + 'T00:00:00');
+    return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  }
+
+  function matches(post, q) {
+    if (!q) return true;
+    const haystack = [post.title, post.excerpt, post.category, ...(post.tags || [])]
+      .join(' ')
+      .toLowerCase();
+    return q.toLowerCase().split(/\s+/).filter(Boolean).every(term => haystack.includes(term));
+  }
+
+  function render() {
+    const grid = document.getElementById('posts-grid');
+    let filtered = allPosts.filter(p =>
+      (activeTag === 'All' || p.category === activeTag) && matches(p, query)
+    );
+
+    // Pinned post floats to the top, but only on the unfiltered default view —
+    // an active search or category filter shows plain date order instead.
+    if (activeTag === 'All' && !query) {
+      const pinned = filtered.filter(p => p.pinned);
+      const rest = filtered.filter(p => !p.pinned);
+      filtered = [...pinned, ...rest];
+    }
+
+    document.getElementById('result-count').textContent =
+      `Showing ${filtered.length} of ${allPosts.length} ${allPosts.length === 1 ? 'story' : 'stories'}`;
+
+    if (filtered.length === 0) {
+      grid.innerHTML = `
+        <div class="no-results">
+          <p>Nothing matches that — yet.</p>
+          <p>Try a different word, or clear the filter above.</p>
+        </div>`;
+      return;
+    }
+
+    grid.innerHTML = filtered.map((p, i) => `
+      <a class="post-card" href="/blog/${p.slug}" style="animation-delay:${Math.min(i, 6) * 0.06}s">
+        <div class="post-card-media">
+          <img src="${p.image}" alt="${p.imageAlt || ''}" loading="lazy">
+          <span class="post-card-category">${p.category}</span>
+          ${p.pinned ? `<span class="post-card-featured"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a1 1 0 0 1 1 1v6.5l4.4 2.5a1 1 0 0 1 .5.9V14a1 1 0 0 1-1 1h-4v6l-1 2-1-2v-6H7a1 1 0 0 1-1-1v-1.1a1 1 0 0 1 .5-.9L11 9.5V3a1 1 0 0 1 1-1z"/></svg>Featured</span>` : ''}
+        </div>
+        <div class="post-card-body">
+          <h2>${p.title}</h2>
+          <p>${p.excerpt}</p>
+          <div class="post-card-meta">
+            <span>${formatDate(p.date)}</span>
+            <span class="dot">·</span>
+            <span>${p.readTime}</span>
+          </div>
+        </div>
+      </a>
+    `).join('');
+  }
+
+  function renderTagPills() {
+    const categories = ['All', ...new Set(allPosts.map(p => p.category))];
+    const wrap = document.getElementById('tag-pills');
+    wrap.innerHTML = categories.map(c =>
+      `<button class="tag-pill${c === activeTag ? ' active' : ''}" data-cat="${c}">${c}</button>`
+    ).join('');
+    wrap.querySelectorAll('.tag-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeTag = btn.dataset.cat;
+        wrap.querySelectorAll('.tag-pill').forEach(b => b.classList.toggle('active', b === btn));
+        render();
+      });
+    });
+  }
+
+  document.getElementById('search-input').addEventListener('input', (e) => {
+    query = e.target.value;
+    render();
+  });
+
+  fetch('/blog/posts.json')
+    .then(r => r.json())
+    .then(data => {
+      allPosts = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+      renderTagPills();
+      render();
+    })
+    .catch(() => {
+      document.getElementById('posts-grid').innerHTML =
+        '<div class="no-results"><p>Couldn\'t load stories right now.</p><p>Refresh to try again.</p></div>';
+    });
+
+  // Read ?q= from URL so search results can be linked/shared
+  const params = new URLSearchParams(location.search);
+  if (params.get('q')) {
+    document.getElementById('search-input').value = params.get('q');
+    query = params.get('q');
+  }
+</script>
+</body>
+</html>

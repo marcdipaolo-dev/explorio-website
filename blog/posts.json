@@ -1,0 +1,39 @@
+[
+  {
+    "slug": "how-ai-audio-tours-work",
+    "title": "How AI audio tours actually work",
+    "excerpt": "Most audio tours are a recording on a loop. Explorio is a conversation. Here's what's actually happening between your question and its answer.",
+    "category": "Product",
+    "tags": ["AI", "audio tours", "how it works", "technology"],
+    "date": "2026-06-02",
+    "readTime": "6 min read",
+    "author": "The Explorio Team",
+    "image": "/uploads/hero-museum-f2189f16.png",
+    "imageAlt": "Woman alone in a grand museum hall, listening to a guide"
+  },
+  {
+    "slug": "ten-questions-worth-asking-on-a-walking-tour",
+    "title": "Ten questions worth asking on your next walking tour",
+    "excerpt": "The best tours aren't the ones with the most facts. They're the ones where you actually got to ask what you were wondering. Steal these.",
+    "category": "Travel Tips",
+    "tags": ["travel tips", "walking tours", "curiosity", "questions"],
+    "date": "2026-05-18",
+    "readTime": "5 min read",
+    "author": "The Explorio Team",
+    "image": "/uploads/LC2-c737a29b.jpg",
+    "imageAlt": "Young man with AirPods walking down ancient stone steps"
+  },
+  {
+    "slug": "it-started-with-a-guidebook-in-florence",
+    "title": "It started with a guidebook in Florence",
+    "excerpt": "Thirty years before Explorio existed, its founder spent a week in Florence reading a guidebook aloud to his wife. This is the origin story.",
+    "category": "Behind the Scenes",
+    "tags": ["origin story", "Florence", "founder", "behind the scenes"],
+    "date": "2026-04-30",
+    "readTime": "4 min read",
+    "author": "Marc DiPaolo, Founder",
+    "image": "/uploads/LO2-c3635e16.jpg",
+    "imageAlt": "A misty, golden-lit cobblestone street in an old European city",
+    "pinned": true
+  }
+]

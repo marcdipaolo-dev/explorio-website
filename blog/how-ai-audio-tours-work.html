@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BF0G306RFP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-BF0G306RFP');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How AI Audio Tours Actually Work — Explorio Blog</title>
+<meta name="description" content="Most audio tours are a recording on a loop. Explorio is a conversation. Here's what's actually happening between your question and its answer.">
+<link rel="canonical" href="https://explorio.io/blog/how-ai-audio-tours-work">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Explorio">
+<meta property="og:url" content="https://explorio.io/blog/how-ai-audio-tours-work">
+<meta property="og:title" content="How AI Audio Tours Actually Work">
+<meta property="og:description" content="Most audio tours are a recording on a loop. Explorio is a conversation. Here's what's actually happening between your question and its answer.">
+<meta property="og:image" content="https://explorio.io/uploads/hero-museum-f2189f16.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How AI Audio Tours Actually Work">
+<meta name="twitter:description" content="Most audio tours are a recording on a loop. Explorio is a conversation. Here's what's actually happening between your question and its answer.">
+<meta name="twitter:image" content="https://explorio.io/uploads/hero-museum-f2189f16.png">
+
+<!-- Schema: BlogPosting -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How AI audio tours actually work",
+  "description": "Most audio tours are a recording on a loop. Explorio is a conversation. Here's what's actually happening between your question and its answer.",
+  "image": "https://explorio.io/uploads/hero-museum-f2189f16.png",
+  "datePublished": "2026-06-02",
+  "author": { "@type": "Organization", "name": "Explorio" },
+  "publisher": { "@id": "https://explorio.io/#organization" },
+  "mainEntityOfPage": "https://explorio.io/blog/how-ai-audio-tours-work"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #0D1117; --surface: #151B26; --muted-bg: #1E2535; --border: #252D3D;
+    --amber: #F5A623; --amber-dim: rgba(245,166,35,0.12);
+    --fg: #F5F1EB; --fg-muted: rgba(245,241,235,0.70); --fg-faint: rgba(245,241,235,0.40);
+    --page-light: #FAF8F5; --text-dark: #1A1612; --text-muted: #7A6E63;
+    --serif: 'Libre Baskerville', Georgia, serif; --sans: 'Inter', system-ui, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); background: var(--page-light); color: var(--text-dark); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px; background: rgba(13,17,23,0.95);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--fg); text-decoration: none; letter-spacing: -0.01em; }
+  .nav-logo span { color: var(--amber); }
+  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 14px; font-weight: 500; color: var(--fg-muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--fg); }
+  .nav-links a.active { color: var(--amber); }
+  .nav-cta { background: var(--amber); color: #0D1117 !important; padding: 9px 20px; border-radius: 999px; font-weight: 600; font-size: 14px; text-decoration: none; transition: opacity 0.2s; }
+  .nav-cta:hover { opacity: 0.88; }
+  @media (max-width: 768px) { nav { padding: 16px 24px; } .nav-links { display: none; } }
+
+  .article-header { background: var(--bg); padding: 148px 48px 0; }
+  .article-header-inner { max-width: 760px; margin: 0 auto; padding-bottom: 56px; }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 500; color: var(--fg-faint);
+    text-decoration: none; margin-bottom: 28px; transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--amber); }
+  .category-tag {
+    display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--amber); margin-bottom: 18px;
+  }
+  h1.title {
+    font-family: var(--serif); font-size: clamp(32px, 4.6vw, 50px); font-weight: 400;
+    line-height: 1.18; color: var(--fg); letter-spacing: -0.01em; margin-bottom: 24px; text-wrap: pretty;
+  }
+  .byline { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--fg-faint); }
+  .byline .dot { opacity: 0.5; }
+
+  .cover-wrap { max-width: 1040px; margin: 0 auto; padding: 0 48px 64px; }
+  .cover-wrap img { width: 100%; aspect-ratio: 16/8; object-fit: cover; border-radius: 18px; display: block; }
+
+  .article-body { max-width: 720px; margin: 0 auto; padding: 0 48px 24px; }
+  .article-body p {
+    font-size: 17.5px; font-weight: 300; line-height: 1.8; color: var(--text-dark);
+    margin-bottom: 24px;
+  }
+  .article-body h2 {
+    font-family: var(--serif); font-size: 27px; font-weight: 400; color: var(--text-dark);
+    margin: 48px 0 18px; line-height: 1.3;
+  }
+  .article-body h3 {
+    font-family: var(--serif); font-size: 21px; font-weight: 400; color: var(--text-dark);
+    margin: 36px 0 14px; line-height: 1.3;
+  }
+  .article-body ul, .article-body ol { margin: 0 0 24px; padding-left: 22px; }
+  .article-body li { font-size: 17px; font-weight: 300; line-height: 1.75; color: var(--text-dark); margin-bottom: 10px; }
+  .article-body strong { font-weight: 600; }
+  .article-body blockquote {
+    font-family: var(--serif); font-style: italic; font-size: 24px; line-height: 1.45;
+    color: var(--text-dark); border-left: 3px solid var(--amber); padding: 4px 0 4px 28px;
+    margin: 40px 0;
+  }
+  .article-body a { color: var(--amber); text-decoration: none; border-bottom: 1px solid rgba(245,166,35,0.35); }
+  .article-body a:hover { border-bottom-color: var(--amber); }
+
+  .tags-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 40px 0 64px; }
+  .tag-chip {
+    font-size: 12px; font-weight: 500; color: var(--text-muted);
+    border: 1px solid #E0DAD0; border-radius: 999px; padding: 6px 14px;
+  }
+
+  .closing-card {
+    max-width: 720px; margin: 0 auto 96px; padding: 0 48px;
+  }
+  .closing-card-inner {
+    background: #fff; border: 1px solid #E8E4DE; border-radius: 18px;
+    padding: 44px; text-align: center;
+  }
+  .closing-card-inner p.lead {
+    font-family: var(--serif); font-size: 23px; font-style: italic; color: var(--text-dark); margin-bottom: 10px;
+  }
+  .closing-card-inner p.sub { font-size: 14px; color: var(--text-muted); margin-bottom: 26px; }
+  .closing-cta {
+    display: inline-block; background: var(--text-dark); color: #fff !important;
+    font-size: 14px; font-weight: 600; padding: 12px 26px; border-radius: 999px;
+    text-decoration: none; transition: opacity 0.2s;
+  }
+  .closing-cta:hover { opacity: 0.85; }
+
+  #related { background: var(--bg); padding: 72px 48px 96px; }
+  .related-inner { max-width: 1040px; margin: 0 auto; }
+  .related-inner h3 {
+    font-family: var(--serif); font-size: 24px; font-weight: 400; color: var(--fg); margin-bottom: 32px;
+  }
+  .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .related-card { text-decoration: none; display: block; }
+  .related-card-media { aspect-ratio: 16/10; border-radius: 12px; overflow: hidden; margin-bottom: 14px; }
+  .related-card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+  .related-card:hover .related-card-media img { transform: scale(1.05); }
+  .related-card p.cat { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+  .related-card h4 { font-family: var(--serif); font-size: 17px; font-weight: 400; color: var(--fg); line-height: 1.35; }
+
+  @media (max-width: 768px) {
+    .article-header { padding: 120px 24px 0; }
+    .cover-wrap { padding: 0 24px 48px; }
+    .cover-wrap img { aspect-ratio: 4/3; }
+    .article-body { padding: 0 24px 16px; }
+    .article-body p, .article-body li { font-size: 16.5px; }
+    .closing-card { padding: 0 24px; }
+    #related { padding: 56px 24px 72px; }
+    .related-grid { grid-template-columns: 1fr; gap: 28px; }
+  }
+
+  footer { background: var(--bg); border-top: 1px solid var(--border); padding: 40px 48px; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; }
+  .footer-logo { font-family: var(--serif); font-size: 18px; color: var(--fg); text-decoration: none; }
+  .footer-logo span { color: var(--amber); }
+  .footer-links { display: flex; gap: 24px; list-style: none; }
+  .footer-links a { font-size: 13px; color: var(--fg-faint); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--fg-muted); }
+  .footer-copy { font-size: 12px; color: var(--fg-faint); }
+  @media (max-width: 768px) { footer { padding: 32px 24px; } .footer-inner { flex-direction: column; text-align: center; } .footer-links { justify-content: center; } }
+
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">Explori<span>o</span></a>
+  <ul class="nav-links">
+    <li><a href="/#how">How it works</a></li>
+    <li><a href="/blog" class="active">Blog</a></li>
+    <li><a href="/#cta" class="nav-cta">Join the waitlist</a></li>
+  </ul>
+</nav>
+
+<article>
+  <header class="article-header">
+    <div class="article-header-inner reveal">
+      <a class="back-link" href="/blog">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to the blog
+      </a>
+      <p class="category-tag">Product</p>
+      <h1 class="title">How AI audio tours actually work</h1>
+      <div class="byline">
+        <span>The Explorio Team</span>
+        <span class="dot">·</span>
+        <span>June 2, 2026</span>
+        <span class="dot">·</span>
+        <span>6 min read</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="cover-wrap reveal">
+    <img src="/uploads/hero-museum-f2189f16.png" alt="Woman alone in a grand museum hall, listening to a guide">
+  </div>
+
+  <div class="article-body reveal">
+    <p>Type "audio tour" into any app store and you'll get the same thing forty different ways: a recording, a map pin, and a play button. Walk up to the pin, hit play, and a narrator talks at you for ninety seconds. Walk away, and it stops. Ask a question, and nothing happens — there's no one there to ask.</p>
+    <p>Explorio works differently, and enough people have asked us "wait, how does it actually know what I'm asking" that it's worth explaining properly.</p>
+
+    <h2>It starts with where you are</h2>
+    <p>Your phone's GPS tells Explorio roughly where you're standing. That location gets matched against a layer of curated content for that spot — not just "this is the Colosseum," but the specific stories, angles, and open questions our research turns up for that few square meters of a city. As you walk, new locations trigger new narration automatically. No tapping through a menu, no squinting at a map.</p>
+
+    <h2>Then it listens</h2>
+    <p>This is the part that's different. While the narration plays, Explorio is also listening for you. Ask "wait, who built this?" or "why does that statue only have one arm?" and your question goes to a language model that already has the context: what you're looking at, what's already been said, and a deep well of researched material about the place.</p>
+    <p>The model isn't guessing from general knowledge alone — it's grounded in material we've written and verified for that specific tour, so answers stay accurate to the place you're actually standing in, not just plausible-sounding.</p>
+
+    <blockquote>The goal isn't to sound like an encyclopedia. It's to sound like a friend who happens to know an unreasonable amount about where you're standing.</blockquote>
+
+    <h2>And it remembers the conversation</h2>
+    <p>If you ask a follow-up — "did he ever finish it?" — Explorio knows what "it" refers to, because it's tracking the conversation, not just answering questions in isolation. That's what makes it feel like a conversation instead of a search bar bolted onto a map.</p>
+
+    <h3>What happens to your questions afterward</h3>
+    <p>Nothing gets stored long-term. Your conversation is used to generate the response in the moment and then it's gone — we go into more detail on this in our <a href="/privacy">privacy policy</a>, but the short version is: your curiosity is yours, not a training set.</p>
+
+    <h2>Why voice, and why it matters for walking</h2>
+    <p>You can type if you want to, but the whole point is being able to keep walking, phone in your pocket, and just ask out loud. A tour that requires you to stare at a screen to interact with it isn't really a walking tour anymore — it's a reading assignment with steps.</p>
+    <p>That's the whole mechanism: location triggers narration, narration invites questions, questions get real answers, and the tour keeps moving with you. No scripts to sit through, no dead ends when your curiosity goes somewhere the writers didn't plan for.</p>
+  </div>
+
+  <div class="article-body reveal">
+    <div class="tags-row">
+      <span class="tag-chip">AI</span>
+      <span class="tag-chip">audio tours</span>
+      <span class="tag-chip">how it works</span>
+      <span class="tag-chip">technology</span>
+    </div>
+  </div>
+
+  <div class="closing-card reveal">
+    <div class="closing-card-inner">
+      <p class="lead">Curious what it sounds like?</p>
+      <p class="sub">Join the waitlist and be first to try it when Explorio launches.</p>
+      <a class="closing-cta" href="/#cta">Join the waitlist</a>
+    </div>
+  </div>
+</article>
+
+<section id="related">
+  <div class="related-inner reveal">
+    <h3>More from the journal</h3>
+    <div class="related-grid" id="related-grid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <a class="footer-logo" href="/">Explori<span>o</span></a>
+    <ul class="footer-links">
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/privacy">Privacy</a></li>
+      <li><a href="/terms">Terms</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Explorio · Made for the genuinely curious.</p>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  reveals.forEach((el, i) => { el.style.transitionDelay = `${Math.min(i,4) * 0.06}s`; observer.observe(el); });
+
+  const CURRENT_SLUG = 'how-ai-audio-tours-work';
+  function formatDate(iso) {
+    return new Date(iso + 'T00:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  }
+  fetch('/blog/posts.json').then(r => r.json()).then(posts => {
+    const others = posts.filter(p => p.slug !== CURRENT_SLUG).sort((a,b) => new Date(b.date) - new Date(a.date)).slice(0,3);
+    document.getElementById('related-grid').innerHTML = others.map(p => `
+      <a class="related-card" href="/blog/${p.slug}">
+        <div class="related-card-media"><img src="${p.image}" alt="${p.imageAlt || ''}" loading="lazy"></div>
+        <p class="cat">${p.category}</p>
+        <h4>${p.title}</h4>
+      </a>
+    `).join('');
+  }).catch(() => {});
+</script>
+</body>
+</html>

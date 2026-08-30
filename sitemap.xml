@@ -11,6 +11,26 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://explorio.io/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://explorio.io/blog/how-ai-audio-tours-work</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://explorio.io/blog/ten-questions-worth-asking-on-a-walking-tour</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://explorio.io/blog/it-started-with-a-guidebook-in-florence</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://explorio.io/privacy</loc>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>

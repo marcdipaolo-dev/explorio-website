@@ -6,13 +6,17 @@ export default {
 
     if (url.pathname === '/api/waitlist' && request.method === 'POST') {
       try {
-        const { email } = await request.json();
+        const { email, platform } = await request.json();
 
         if (!email || !email.includes('@')) {
           return Response.json({ error: 'Invalid email' }, { status: 400 });
         }
 
-        await fetch(`${SCRIPT_URL}?email=${encodeURIComponent(email)}`);
+        // Only ever ios/android/blank — anything else (or a desktop visitor
+        // who never picked one) is dropped rather than passed through raw.
+        const safePlatform = platform === 'ios' || platform === 'android' ? platform : '';
+
+        await fetch(`${SCRIPT_URL}?email=${encodeURIComponent(email)}&platform=${encodeURIComponent(safePlatform)}`);
         return Response.json({ result: 'ok' });
       } catch {
         return Response.json({ error: 'Server error' }, { status: 500 });

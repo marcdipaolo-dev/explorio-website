@@ -1000,30 +1000,24 @@
     background: var(--muted-bg);
     border: 1px solid var(--border);
     border-radius: 999px;
-    padding: 12px 40px 12px 18px;
+    padding: 12px 18px;
     font-family: var(--sans);
     font-size: 14px;
     color: var(--fg);
     outline: none;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
     color-scheme: dark;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%239CA3AF' d='M1.4.6 6 5.2 10.6.6 12 2 6 8 0 2z'/></svg>");
-    background-repeat: no-repeat;
-    background-position: right 16px center;
     transition: border-color 0.2s;
   }
   .waitlist-select:focus { border-color: var(--amber); }
-  .waitlist-select option { background: var(--surface); color: var(--fg); }
   .waitlist-fine {
     margin-top: 14px;
     font-size: 12px;
     color: var(--fg-faint);
     letter-spacing: 0.01em;
   }
-  .platform-label {
+  .cta-inner > p.platform-label {
     margin-top: 22px;
+    margin-bottom: 0;
     font-size: 12px;
     color: var(--fg-faint);
     letter-spacing: 0.01em;
@@ -1031,7 +1025,7 @@
   .platform-toggle {
     display: flex;
     gap: 8px;
-    margin-top: 10px;
+    margin-top: 6px;
     justify-content: center;
     flex-wrap: wrap;
   }
@@ -1484,22 +1478,7 @@
     <div class="waitlist-fields reveal reveal-delay-3" id="waitlist-fields">
       <div class="waitlist-field">
         <label for="city-interest">City you're most interested in</label>
-        <select class="waitlist-select" id="city-interest" name="city_interest">
-          <option value="">Select a city</option>
-          <option value="london">London</option>
-          <option value="lisbon">Lisbon</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-      <div class="waitlist-field">
-        <label for="travel-window">When are you traveling?</label>
-        <select class="waitlist-select" id="travel-window" name="travel_window">
-          <option value="">Select a window</option>
-          <option value="next_30_days">Next 30 days</option>
-          <option value="1_3_months">1–3 months</option>
-          <option value="3_6_months">3–6 months</option>
-          <option value="not_sure">Not sure yet</option>
-        </select>
+        <input class="waitlist-select" type="text" id="city-interest" name="city_interest" maxlength="120" autocomplete="address-level2">
       </div>
     </div>
     <p class="platform-label reveal reveal-delay-3" id="platform-label">Which type of phone do you have?</p>
@@ -1688,14 +1667,13 @@
     }
     const email = input.value.trim();
     const city_interest = document.getElementById('city-interest').value.trim();
-    const travel_window = document.getElementById('travel-window').value.trim();
     btn.disabled = true;
     btn.textContent = 'Joining…';
     btn.style.opacity = '0.6';
     fetch(WAITLIST_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, platform: selectedPlatform, city_interest, travel_window })
+      body: JSON.stringify({ email, platform: selectedPlatform, city_interest })
     })
     .catch(() => {})
     .finally(() => showWaitlistSuccess(email));
@@ -1709,6 +1687,9 @@
 
   // Enter key on waitlist
   document.getElementById('email-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleWaitlist();
+  });
+  document.getElementById('city-interest').addEventListener('keydown', e => {
     if (e.key === 'Enter') handleWaitlist();
   });
 

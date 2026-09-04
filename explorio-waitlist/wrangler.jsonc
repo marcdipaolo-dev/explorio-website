@@ -1,0 +1,5 @@
+{
+  "name": "explorio-waitlist",
+  "compatibility_date": "2026-04-22",
+  "main": "./worker.js"
+}

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BF0G306RFP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-BF0G306RFP');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ — Explorio</title>
+<meta name="description" content="Answers to the questions people ask most about Explorio — how walks work, what they cost, sharing a tour with a friend, and how it's different from other audio guides.">
+<link rel="canonical" href="https://explorio.io/faq">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Explorio">
+<meta property="og:url" content="https://explorio.io/faq">
+<meta property="og:title" content="FAQ — Explorio">
+<meta property="og:description" content="Answers to the questions people ask most about Explorio — how walks work, what they cost, sharing a tour with a friend, and how it's different from other audio guides.">
+<meta property="og:image" content="https://explorio.io/uploads/og-image.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FAQ — Explorio">
+<meta name="twitter:description" content="Answers to the questions people ask most about Explorio — how walks work, what they cost, sharing a tour with a friend, and how it's different from other audio guides.">
+<meta name="twitter:image" content="https://explorio.io/uploads/og-image.png">
+
+<!-- Schema: FAQPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Explorio?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Explorio is a walking tour guide app that's like a good friend who lives where you're visiting and is excited to show you around. Explorio's narrator tells you the most amazing, true stories about the place, and if you get curious about something, you can ask your own questions and get answers in real time." }
+    },
+    {
+      "@type": "Question",
+      "name": "How long is a walk?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Usually between five and ten stops and 20–45 minutes of listening (most land around six to eight stops and 25–35 minutes of audio). You'll be on the ground longer than that, often a couple of hours, because you're actually walking." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can two people take the same tour together?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Couples and friends can experience tours together by connecting two sets of headphones to one mobile phone. On iPhone, this works with AirPods or Beats headphones via Share Audio. On Android, use the Quick panel's Media output setting to stream to both sets at once. A feature to share a tour directly with a companion on their own phone is coming soon." }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does it cost?",
+      "acceptedAnswer": { "@type": "Answer", "text": "You can try the first stop free. After that, you unlock a walk to hear the rest of the tour, with the exact price shown in the app when you unlock. There's never a subscription to cancel. If you skip unlocking the narrator, you still keep the map and stop descriptions to explore on your own." }
+    },
+    {
+      "@type": "Question",
+      "name": "What if I have questions about what I'm seeing while I walk?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Just ask your question to the narrator. Most audio tours go quiet the moment you get curious. This one answers your questions, then keeps going with you." }
+    },
+    {
+      "@type": "Question",
+      "name": "Which cities does it work in?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Anywhere. You can generate a curated walk wherever you are, as long as information about your area exists. Your narrator studies everything about the area — its history, art, architecture, social relevance, everything — and pulls your location's amazing, true stories together for you." }
+    },
+    {
+      "@type": "Question",
+      "name": "How is this different from VoiceMap?",
+      "acceptedAnswer": { "@type": "Answer", "text": "VoiceMap is a catalog of human-narrated tours you pick from. They're excellent, but you're limited to the locations and themes that have already been recorded. Explorio builds a themed walk in real time, based on your interests and wherever you are." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Explorio on iPhone and Android?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Android first, in closed testing and then public. iPhone follows. Join the waitlist at explorio.io and we'll tell you when your store is open." }
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:          #0D1117;
+    --surface:     #151B26;
+    --muted-bg:    #1E2535;
+    --border:      #252D3D;
+    --amber:       #F5A623;
+    --amber-dim:   rgba(245,166,35,0.12);
+    --fg:          #F5F1EB;
+    --fg-muted:    rgba(245,241,235,0.70);
+    --fg-faint:    rgba(245,241,235,0.40);
+    --serif:       'Libre Baskerville', Georgia, serif;
+    --sans:        'Inter', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(13,17,23,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--serif); font-size: 22px; font-weight: 400;
+    color: var(--fg); text-decoration: none; letter-spacing: -0.01em;
+  }
+  .nav-logo span { color: var(--amber); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 14px; font-weight: 500; color: var(--fg-muted);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--fg); }
+  .nav-links a.active { color: var(--amber); }
+  .nav-cta {
+    background: var(--amber); color: #0D1117 !important;
+    padding: 9px 20px; border-radius: 999px; font-weight: 600;
+    font-size: 14px; text-decoration: none; transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.88; }
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+  }
+
+  .page-wrap {
+    max-width: 760px; margin: 0 auto; padding: 140px 48px 96px;
+  }
+  @media (max-width: 768px) {
+    .page-wrap { padding: 110px 24px 64px; }
+  }
+
+  .overline {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--amber); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .overline::before {
+    content: ''; display: block; width: 28px; height: 1px;
+    background: var(--amber);
+  }
+
+  h1 {
+    font-family: var(--serif); font-size: clamp(36px, 5vw, 52px);
+    font-weight: 400; letter-spacing: -0.01em; color: var(--fg);
+    line-height: 1.15; margin-bottom: 20px;
+  }
+  .intro {
+    font-size: 17px; font-weight: 300; line-height: 1.7;
+    color: var(--fg-muted); max-width: 560px; margin-bottom: 56px;
+  }
+
+  /* Accordion */
+  .faq-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 72px; }
+
+  .faq-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .faq-item[open] { border-color: rgba(245,166,35,0.35); }
+
+  .faq-item summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; padding: 24px 28px;
+    font-family: var(--serif); font-size: 18px; font-weight: 400;
+    color: var(--fg); line-height: 1.4;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::marker { content: ''; }
+  .faq-item summary:hover .faq-num { color: var(--amber); }
+
+  .faq-q { display: flex; gap: 14px; align-items: baseline; }
+  .faq-num {
+    font-family: var(--sans); font-size: 12px; font-weight: 700;
+    letter-spacing: 0.04em; color: var(--fg-faint); flex-shrink: 0;
+    transition: color 0.2s; padding-top: 3px;
+  }
+
+  .faq-icon {
+    flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+    border: 1px solid var(--border); background: var(--muted-bg);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; transition: border-color 0.2s, background 0.2s, transform 0.3s;
+  }
+  .faq-icon::before, .faq-icon::after {
+    content: ''; position: absolute; background: var(--fg-muted);
+    transition: background 0.2s;
+  }
+  .faq-icon::before { width: 11px; height: 1.5px; }
+  .faq-icon::after { width: 1.5px; height: 11px; transition: transform 0.25s ease, background 0.2s; }
+  .faq-item[open] .faq-icon { border-color: var(--amber); background: var(--amber-dim); }
+  .faq-item[open] .faq-icon::before,
+  .faq-item[open] .faq-icon::after { background: var(--amber); }
+  .faq-item[open] .faq-icon::after { transform: rotate(90deg); }
+
+  .faq-a {
+    padding: 0 28px 26px 62px;
+    font-size: 15px; font-weight: 300; line-height: 1.75;
+    color: var(--fg-muted);
+  }
+  .faq-a p + p { margin-top: 14px; }
+  .faq-a strong { color: var(--fg); font-weight: 600; }
+  .faq-a a {
+    color: var(--amber); text-decoration: none; font-weight: 500;
+    border-bottom: 1px solid rgba(245,166,35,0.35);
+    transition: opacity 0.2s;
+  }
+  .faq-a a:hover { opacity: 0.8; }
+  @media (max-width: 600px) {
+    .faq-item summary { padding: 20px; gap: 14px; }
+    .faq-a { padding: 0 20px 22px 20px; }
+    .faq-num { display: none; }
+  }
+
+  /* Still curious CTA */
+  .faq-cta {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 44px 48px;
+    text-align: center;
+  }
+  @media (max-width: 600px) {
+    .faq-cta { padding: 36px 24px; }
+  }
+  .faq-cta h2 {
+    font-family: var(--serif); font-size: 26px; font-weight: 400;
+    color: var(--fg); margin-bottom: 10px;
+  }
+  .faq-cta p {
+    font-size: 15px; font-weight: 300; color: var(--fg-muted);
+    margin-bottom: 26px;
+  }
+  .faq-cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--amber); color: #0D1117;
+    padding: 13px 28px; border-radius: 999px; font-weight: 600;
+    font-size: 14px; text-decoration: none; transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-secondary {
+    background: transparent; color: var(--fg);
+    border: 1px solid var(--border);
+    padding: 13px 28px; border-radius: 999px; font-weight: 600;
+    font-size: 14px; text-decoration: none; transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--amber); color: var(--amber); }
+
+  footer {
+    background: var(--bg); border-top: 1px solid var(--border);
+    padding: 40px 48px; margin-top: 0;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; flex-wrap: wrap; align-items: center;
+    justify-content: space-between; gap: 24px;
+  }
+  .footer-logo {
+    font-family: var(--serif); font-size: 18px; color: var(--fg);
+    text-decoration: none;
+  }
+  .footer-logo span { color: var(--amber); }
+  .footer-links { display: flex; gap: 24px; list-style: none; }
+  .footer-links a {
+    font-size: 13px; color: var(--fg-faint); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--fg-muted); }
+  .footer-copy { font-size: 12px; color: var(--fg-faint); }
+  @media (max-width: 768px) {
+    footer { padding: 32px 24px; }
+    .footer-inner { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+  .reveal.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">Explori<span>o</span></a>
+  <ul class="nav-links">
+    <li><a href="/#how">How it works</a></li>
+    <li><a href="/faq" class="active">FAQ</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/#cta" class="nav-cta">Join the waitlist</a></li>
+  </ul>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="reveal">
+    <p class="overline">FAQ</p>
+    <h1>Questions worth asking.</h1>
+    <p class="intro">Here's everything people usually want to know before their first walk — how it works, what it costs, and what makes it different.</p>
+  </div>
+
+  <div class="faq-list">
+
+    <details class="faq-item reveal" open>
+      <summary>
+        <span class="faq-q"><span class="faq-num">Q1</span><span>What is Explorio?</span></span>
+        <span class="faq-icon"></span>
+      </summary>
+      <div class="faq-a">
+        <p>Explorio is a walking tour guide app that's like a good friend who lives where you're visiting and is excited to show you around. Explorio's narrator tells you the most amazing, true stories about the place — and if you get curious about something, you can ask your own questions and get answers in real time.</p>
+      </div>
+    </details>
+
+    <details class="faq-item reveal">
+      <summary>
+        <span class="faq-q"><span class="faq-num">Q2</span><span>How long is a walk?</span></span>
+        <span class="faq-icon"></span>
+      </summary>
+      <div class="faq-a">
+        <p>Usually between five and ten stops and 20–45 minutes of listening (most land around six to eight stops and 25–35 minutes of audio). You'll be on the ground longer than that, often a couple of hours, because you're actually walking.</p>
+      </div>
+    </details>
+
+    <details class="faq-item reveal">
+      <summary>
+        <span class="faq-q"><span class="faq-num">Q3</span><span>Can two people take the same tour together?</span></span>
+        <span class="faq-icon"></span>
+      </summary>
+      <div class="faq-a">
+        <p>Yes. Couples and friends can experience tours together by connecting two sets of headphones to one mobile phone. It's very easy to do — first, make sure both sets of headphones are already paired.</p>
+        <p><strong>iPhone:</strong> This works if you have Apple AirPods or Beats-branded headphones. Tap the AirPods icon on the Now Playing screen, the Lock Screen, or in Control Center. Select Share Audio on your device, then follow the onscreen instructions to pair the second pair of headphones. <a href="https://youtube.com/shorts/ImRZFejf06w?si=68SlM6preAqYaFyT" target="_blank" rel="noopener noreferrer">Watch this video</a> if you want more instruction.</p>
+        <p><strong>Android:</strong> Swipe down from the top of your screen to open the Quick panel, then tap on Media output. Select both sets of headphones to enable simultaneous streaming. <a href="https://youtube.com/shorts/nxkDVI0E7D8?si=D4ftUWdT0gppHEKw" target="_blank" rel="noopener noreferrer">Watch this video</a> if you want more instruction.</p>
+        <p>We're also working hard to deliver a new feature that will let you share the tour directly with a companion on their own phone. That will be ready soon.</p>
+      </div>
+    </details>
+
+    <details class="faq-item reveal">
+      <summary>
+        <span class="faq-q"><span class="faq-num">Q4</span><span>How much does it cost?</span></span>
+        <span class="faq-icon"></span>
+      </summary>
+      <div class="faq-a">
+        <p>You can try the first stop free. After that you unlock a walk to hear the rest of the tour (you will definitely want to!). The exact price shows in the app when you unlock. You will never have a subscription you have to cancel.</p>
+        <p>If you don't want the narrator with you for the rest of your tour, you still have access to the map and the tour stops with descriptions so you can continue to explore on your own — our gift to you for trying Explorio.</p>
+      </div>
+    </details>
+
+    <details class="faq-item reveal">
+      <summary>
+        <span class="faq-q"><span class="faq-num">Q5</span><span>What if I have questions about what I'm seeing while I walk?</span></span>
+        <span class="faq-icon"></span>
+      </summary>
+      <div class="faq-a">
+        <p>Just ask your question to the narrator. Yes — that's the point. Most audio tours go quiet the moment you get curious. This one answers your questions, then keeps going with you.</p>
+      </div>
+    </details>
+
+    <details class="faq-item reveal">
+      <summary>
+        <span class="faq-q"><span class="faq-num">Q6</span><span>Which cities does it work in?</span></span>
+        <span class="faq-icon"></span>
+      </summary>
+      <div class="faq-a">
+        <p>Anywhere. You can generate a curated walk wherever you are, as long as information about your area exists. Your narrator studies everything about the area — its history, art, architecture, social relevance, everything — and pulls your location's amazing, true stories together for you.</p>
+      </div>
+    </details>
+
+    <details class="faq-item reveal">
+      <summary>
+        <span class="faq-q"><span class="faq-num">Q7</span><span>How is this different from VoiceMap?</span></span>
+        <span class="faq-icon"></span>
+      </summary>
+      <div class="faq-a">
+        <p>VoiceMap is a catalog of human-narrated tours you can pick from. They're excellent, but you're limited to the locations and themes that have been pre-recorded.</p>
+        <p>Explorio can build a themed walk in real time, based on your interests and wherever you are.</p>
+      </div>
+    </details>
+
+    <details class="faq-item reveal">
+      <summary>
+        <span class="faq-q"><span class="faq-num">Q8</span><span>Is Explorio on iPhone and Android?</span></span>
+        <span class="faq-icon"></span>
+      </summary>
+      <div class="faq-a">
+        <p>Android first (closed testing, then public). iPhone follows. Join the waitlist at explorio.io and we'll tell you when your store is open.</p>
+      </div>
+    </details>
+
+  </div>
+
+  <div class="faq-cta reveal">
+    <h2>Still curious?</h2>
+    <p>We read everything that comes in — ask us anything that isn't answered here.</p>
+    <div class="faq-cta-actions">
+      <a href="/#cta" class="btn-primary">Join the waitlist</a>
+      <a href="/contact" class="btn-secondary">Contact us</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a class="footer-logo" href="/">Explori<span>o</span></a>
+    <ul class="footer-links">
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/faq">FAQ</a></li>
+      <li><a href="/privacy">Privacy</a></li>
+      <li><a href="/terms">Terms</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Explorio · Made for the genuinely curious.</p>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach((el, i) => {
+    el.style.transitionDelay = `${Math.min(i, 6) * 0.06}s`;
+    observer.observe(el);
+  });
+
+  // Only one FAQ item open at a time
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    item.addEventListener('toggle', () => {
+      if (item.open) {
+        faqItems.forEach(other => { if (other !== item) other.open = false; });
+      }
+    });
+  });
+</script>
+</body>
+</html>
